@@ -1,1127 +1,1922 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ceytrixsoft | Modern Software Company</title>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ceytrixsoft | Modern Software Company</title>
 
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <style>
-      body {
-        font-family: "Poppins", sans-serif;
-        background: #0a0a0a;
-        overflow-x: hidden;
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: 'var(--primary)',
+            dark: 'var(--dark)',
+            light: 'var(--light)',
+            accent: 'var(--accent)',
+            card: 'var(--card)',
+            text: 'var(--text)',
+            yellow: {
+              300: 'var(--accent)',
+              400: 'var(--accent)',
+              500: 'var(--primary)',
+            },
+            black: 'var(--dark)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #2563EB;
+      --dark: #0F172A;
+      --light: #F8FAFC;
+      --accent: #38BDF8;
+      --card: #FFFFFF;
+      --text: #1E293B;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #0F172A;
+      color: #F8FAFC;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .yellow-glow {
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(circle at top left,
+          rgba(37, 99, 235, 0.18),
+          transparent 35%),
+        radial-gradient(circle at bottom right,
+          rgba(56, 189, 248, 0.12),
+          transparent 35%);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ---- SIDEBAR ---- */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 300px;
+      height: 100vh;
+      background: #0F172A;
+      border-left: 1px solid rgba(56, 189, 248, 0.15);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1.5rem;
+      gap: 0;
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -8px 0 40px rgba(0, 0, 0, 0.4);
+    }
+
+    #sidebar.open {
+      right: 0;
+    }
+
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 999;
+      backdrop-filter: blur(2px);
+    }
+
+    #sidebar-overlay.open {
+      display: block;
+    }
+
+    #sidebar .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    #sidebar .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    #sidebar .sidebar-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    #sidebar .sidebar-links a:hover {
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent);
+    }
+
+    #sidebar .sidebar-links a i {
+      width: 20px;
+      text-align: center;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+
+    #sidebar .sidebar-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(255, 255, 255, 0.07);
+      border: none;
+      color: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+
+    #sidebar .sidebar-close:hover {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--accent);
+    }
+
+    #sidebar .sidebar-btn {
+      margin-top: 1.5rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0.85rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+
+    #sidebar .sidebar-btn:hover {
+      background: var(--accent);
+    }
+
+    /* ---- HAMBURGER ICON ---- */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    @media (max-width: 1023px) {
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* ============================================================
+       FULL MOBILE-FIRST RESPONSIVE CSS
+       ============================================================ */
+
+    /* Base: make all images fluid */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ---- HERO ---- */
+    #home .max-w-7xl {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-top: 80px;
+    }
+
+    @media (min-width: 1024px) {
+      #home .max-w-7xl {
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        padding-top: 6rem;
+      }
+    }
+
+    /* Hero heading */
+    #home h1 {
+      font-size: clamp(2rem, 7vw, 5rem);
+      line-height: 1.15;
+    }
+
+    #home p.text-lg {
+      font-size: clamp(0.9rem, 3vw, 1.125rem);
+    }
+
+    /* Hero stat grid */
+    #home .grid.grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    #home .grid.grid-cols-3 h2 {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+    }
+
+    /* Hide hero right card on mobile */
+    #home .relative:last-child {
+      display: none;
+    }
+
+    @media (min-width: 1024px) {
+      #home .relative:last-child {
+        display: block;
+      }
+    }
+
+    /* ---- SECTION PADDING (mobile-tight) ---- */
+    section {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      section {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+    }
+
+    /* ---- SECTION HEADINGS ---- */
+    h2.text-5xl {
+      font-size: clamp(1.75rem, 6vw, 3rem) !important;
+    }
+
+    h2.text-3xl {
+      font-size: clamp(1.5rem, 5vw, 2rem) !important;
+    }
+
+    /* ---- TECH STACK GRID ---- */
+    #tech .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      #tech .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      #tech .grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    /* ---- ABOUT GRID ---- */
+    #about .max-w-7xl {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+      #about .max-w-7xl {
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+    }
+
+    #about img {
+      width: 100%;
+      border-radius: 1.5rem;
+    }
+
+    /* ---- SERVICES GRID ---- */
+    #services .grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      #services .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      #services .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* ---- PROJECTS GRID ---- */
+    #projects .grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 1024px) {
+      #projects .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    #projects img {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    @media (min-width: 640px) {
+      #projects img {
+        height: 240px;
+      }
+    }
+
+    /* ---- TEAM GRID ---- */
+    #team .grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      #team .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    #team .glass {
+      padding: 1.5rem;
+    }
+
+    /* ---- REVIEWS GRID ---- */
+    #reviews .grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      #reviews .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      #reviews .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* ---- CONTACT FORM ---- */
+    #contact .max-w-5xl {
+      padding: 1.5rem;
+      border-radius: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      #contact .max-w-5xl {
+        padding: 3rem;
+        border-radius: 2.5rem;
+      }
+    }
+
+    #contact form {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 640px) {
+      #contact form {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    #contact input,
+    #contact textarea {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 0.9rem;
+    }
+
+    /* Make all contact form items full-width on mobile */
+    #contact form>* {
+      grid-column: 1 / -1 !important;
+    }
+
+    @media (min-width: 640px) {
+      #contact form input:nth-child(1) {
+        grid-column: 1;
       }
 
-      .glass {
-        background: rgba(255, 255, 255, 0.04);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+      #contact form input:nth-child(2) {
+        grid-column: 2;
       }
 
-      .yellow-glow {
-        box-shadow: 0 0 30px rgba(255, 193, 7, 0.2);
+      #contact form input:nth-child(3),
+      #contact form textarea,
+      #contact form button {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* ---- FOOTER ---- */
+    footer .max-w-6xl {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 640px) {
+      footer .max-w-6xl {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      footer .max-w-6xl {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    footer iframe {
+      height: 160px !important;
+    }
+
+    @media (min-width: 768px) {
+      footer iframe {
+        height: 220px !important;
+      }
+    }
+
+    /* ---- GLASS CARDS MOBILE ---- */
+    .glass {
+      border-radius: 1.25rem;
+    }
+
+    @media (max-width: 480px) {
+      .glass.p-8 {
+        padding: 1.25rem !important;
       }
 
-      .hero-bg {
-        background:
-          radial-gradient(
-            circle at top left,
-            rgba(255, 193, 7, 0.18),
-            transparent 35%
-          ),
-          radial-gradient(
-            circle at bottom right,
-            rgba(255, 193, 7, 0.12),
-            transparent 35%
-          );
+      .glass.p-12 {
+        padding: 1.5rem !important;
+      }
+    }
+
+    /* ---- BUTTONS MOBILE ---- */
+    @media (max-width: 480px) {
+      .flex.flex-wrap.gap-5 {
+        gap: 0.75rem;
       }
 
-      html {
-        scroll-behavior: smooth;
+      .flex.flex-wrap.gap-5 button {
+        width: 100%;
+        justify-content: center;
+        padding: 0.85rem 1.5rem;
       }
-    </style>
-  </head>
+    }
 
-  <body class="text-white">
-    <!-- ================= NAVBAR ================= -->
-    <nav
-      class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-yellow-500/10"
-    >
-      <div
-        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
-      >
-        <!-- LOGO -->
-        <h1 class="text-3xl font-black text-yellow-400">Ceytrixsoft</h1>
+    /* ---- SECTION HEADING MARGIN ---- */
+    .text-center.mb-20 {
+      margin-bottom: 2.5rem;
+    }
 
-        <!-- DESKTOP MENU -->
-        <ul class="hidden lg:flex items-center gap-8 font-medium">
-          <li>
-            <a href="#home" class="hover:text-yellow-400 transition">Home</a>
-          </li>
-          <li>
-            <a href="#about" class="hover:text-yellow-400 transition">About</a>
-          </li>
-          <li>
-            <a href="#services" class="hover:text-yellow-400 transition"
-              >Services</a
-            >
-          </li>
-          <li>
-            <a href="#projects" class="hover:text-yellow-400 transition"
-              >Projects</a
-            >
-          </li>
-          <li>
-            <a href="#team" class="hover:text-yellow-400 transition">Team</a>
-          </li>
-          <li>
-            <a href="#contact" class="hover:text-yellow-400 transition"
-              >Contact</a
-            >
-          </li>
-        </ul>
+    @media (min-width: 768px) {
+      .text-center.mb-20 {
+        margin-bottom: 4rem;
+      }
+    }
 
-        <!-- BUTTON -->
-        <button
-          class="hidden lg:block bg-yellow-400 hover:bg-yellow-300 text-black px-6 py-2 rounded-full font-bold transition"
-        >
-          Start Project
-        </button>
+    /* ---- FOOTER MAP ---- */
+    .footer-map {
+      height: 160px !important;
+    }
 
-        <!-- MOBILE MENU BUTTON -->
-        <button
-          onclick="toggleMenu()"
-          class="lg:hidden text-yellow-400 text-2xl"
-        >
-          <i class="fa-solid fa-bars"></i>
-        </button>
-      </div>
+    @media (min-width: 768px) {
+      .footer-map {
+        height: 200px !important;
+      }
+    }
 
-      <!-- ================= MOBILE MENU (SMOOTH) ================= -->
-      <div
-        id="mobileMenu"
-        class="lg:hidden flex flex-col gap-6 px-6 py-6 bg-black/95 border-t border-yellow-500/10 max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out"
-      >
-        <a href="#home" class="hover:text-yellow-400">Home</a>
-        <a href="#about" class="hover:text-yellow-400">About</a>
-        <a href="#services" class="hover:text-yellow-400">Services</a>
-        <a href="#projects" class="hover:text-yellow-400">Projects</a>
-        <a href="#team" class="hover:text-yellow-400">Team</a>
-        <a href="#contact" class="hover:text-yellow-400">Contact</a>
+    /* ---- MARQUEE ---- */
+    @keyframes slideLeft {
+      0% {
+        transform: translateX(100vw);
+      }
 
-        <button
-          class="bg-yellow-400 text-black px-5 py-2 rounded-full font-bold mt-4"
-        >
-          Start Project
-        </button>
-      </div>
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .animate-marquee {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: slideLeft 22s linear infinite;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* ---- THEME TOGGLE SWITCH ---- */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: #1e293b;
+      border-radius: 50px;
+      border: 2px solid rgba(56, 189, 248, 0.3);
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+
+    body.light-mode .theme-toggle {
+      background: #fde68a;
+      border-color: rgba(234, 179, 8, 0.5);
+    }
+
+    .theme-toggle .toggle-thumb {
+      position: absolute;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #38BDF8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    body.light-mode .theme-toggle .toggle-thumb {
+      left: 33px;
+      background: #FACC15;
+    }
+
+    /* ---- LIGHT MODE OVERRIDES ---- */
+    body.light-mode {
+      background: #F8FAFC !important;
+      color: #1E293B !important;
+    }
+
+    /* ---- NAV ---- */
+    body.light-mode nav {
+      background: rgba(255, 255, 255, 0.95) !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-mode nav a,
+    body.light-mode nav li a {
+      color: #334155 !important;
+    }
+
+    body.light-mode nav span {
+      color: var(--primary) !important;
+    }
+
+    body.light-mode .hamburger span {
+      background: var(--primary) !important;
+    }
+
+    /* ---- SIDEBAR ---- */
+    body.light-mode #sidebar {
+      background: #fff;
+      border-left: 1px solid #e2e8f0;
+      box-shadow: -8px 0 40px rgba(0, 0, 0, 0.1);
+    }
+
+    body.light-mode #sidebar .sidebar-links a {
+      color: #334155;
+    }
+
+    body.light-mode #sidebar .sidebar-links a:hover {
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--primary);
+    }
+
+    body.light-mode #sidebar .sidebar-links a i {
+      color: var(--primary);
+    }
+
+    body.light-mode #sidebar span {
+      color: var(--primary) !important;
+    }
+
+    body.light-mode #sidebar .sidebar-close {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    body.light-mode #sidebar .sidebar-close:hover {
+      background: #e2e8f0;
+    }
+
+    body.light-mode #sidebar .sidebar-btn {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* ---- ALL SECTIONS BASE ---- */
+    body.light-mode section {
+      color: #1E293B;
+    }
+
+    body.light-mode h1,
+    body.light-mode h2,
+    body.light-mode h3,
+    body.light-mode h4 {
+      color: #0F172A !important;
+    }
+
+    body.light-mode .text-yellow-400 {
+      color: var(--primary) !important;
+    }
+
+    body.light-mode .text-gray-300 {
+      color: #475569 !important;
+    }
+
+    body.light-mode .text-gray-400 {
+      color: #64748b !important;
+    }
+
+    body.light-mode .text-gray-500 {
+      color: #94a3b8 !important;
+    }
+
+    body.light-mode .text-white {
+      color: #1E293B !important;
+    }
+
+    /* ---- GLASS CARDS ---- */
+    body.light-mode .glass {
+      background: #fff !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-mode .glass:hover {
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.1);
+    }
+
+    /* ---- YELLOW GLOW → BLUE GLOW ---- */
+    body.light-mode .yellow-glow {
+      box-shadow: 0 0 30px rgba(37, 99, 235, 0.12) !important;
+    }
+
+    /* ---- HERO SECTION ---- */
+    body.light-mode .hero-bg {
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.1), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.08), transparent 40%) !important;
+    }
+
+    body.light-mode #home .bg-yellow-500\/10,
+    body.light-mode #home .bg-yellow-400\/10 {
+      opacity: 0.3;
+    }
+
+    body.light-mode #home .bg-\[\#111111\] {
+      background: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    /* ---- BUTTONS ---- */
+    body.light-mode .bg-yellow-400 {
+      background: var(--primary) !important;
+      color: #fff !important;
+    }
+
+    body.light-mode .bg-yellow-400:hover {
+      background: var(--accent) !important;
+    }
+
+    body.light-mode .border-yellow-400 {
+      border-color: var(--primary) !important;
+      color: var(--primary) !important;
+    }
+
+    body.light-mode .border-yellow-400:hover {
+      background: var(--primary) !important;
+      color: #fff !important;
+    }
+
+    /* ---- STATS ---- */
+    body.light-mode #home .grid.grid-cols-3 h2 {
+      color: var(--primary) !important;
+    }
+
+    body.light-mode #home .grid.grid-cols-3 p {
+      color: #64748b !important;
+    }
+
+    /* ---- TECH STACK SECTION ---- */
+    body.light-mode #tech {
+      background: #f1f5f9 !important;
+    }
+
+    body.light-mode #tech .glass {
+      background: #fff !important;
+    }
+
+    body.light-mode #tech .text-cyan-400 {
+      color: #0891b2 !important;
+    }
+
+    body.light-mode #tech .text-green-400 {
+      color: #16a34a !important;
+    }
+
+    body.light-mode #tech .text-blue-400 {
+      color: #2563eb !important;
+    }
+
+    body.light-mode #tech .text-orange-400 {
+      color: #ea580c !important;
+    }
+
+    body.light-mode #tech .text-pink-400 {
+      color: #db2777 !important;
+    }
+
+    /* ---- ABOUT SECTION ---- */
+    body.light-mode #about {
+      background: #fff !important;
+    }
+
+    body.light-mode #about .bg-yellow-400 {
+      background: var(--primary) !important;
+      color: #fff !important;
+    }
+
+    /* ---- SERVICES SECTION ---- */
+    body.light-mode #services {
+      background: #f1f5f9 !important;
+    }
+
+    body.light-mode #services .glass {
+      background: #fff !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    body.light-mode #services .text-yellow-400 {
+      color: var(--primary) !important;
+    }
+
+    body.light-mode #services .fa-check {
+      color: #16a34a !important;
+    }
+
+    /* ---- PROJECTS SECTION ---- */
+    body.light-mode #projects {
+      background: #fff !important;
+    }
+
+    body.light-mode #projects .bg-yellow-400\/10 {
+      background: rgba(37, 99, 235, 0.08) !important;
+      color: var(--primary) !important;
+    }
+
+    /* ---- TEAM SECTION ---- */
+    body.light-mode #team {
+      background: #f1f5f9 !important;
+    }
+
+    body.light-mode #team img {
+      border-color: var(--primary) !important;
+    }
+
+    /* ---- REVIEWS SECTION ---- */
+    body.light-mode #reviews {
+      background: #f8fafc !important;
+    }
+
+    body.light-mode #reviews .glass {
+      background: #fff !important;
+    }
+
+    body.light-mode #reviews .fa-star {
+      color: #eab308 !important;
+    }
+
+    /* ---- CONTACT SECTION ---- */
+    body.light-mode #contact {
+      background: #fff !important;
+    }
+
+    body.light-mode #contact .max-w-5xl {
+      background: #f8fafc !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 4px 30px rgba(37, 99, 235, 0.08);
+    }
+
+    body.light-mode input,
+    body.light-mode textarea {
+      background: #fff !important;
+      color: #1e293b !important;
+      border-color: #cbd5e1 !important;
+    }
+
+    body.light-mode input::placeholder,
+    body.light-mode textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    body.light-mode input:focus,
+    body.light-mode textarea:focus {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    body.light-mode #contact button {
+      background: var(--primary) !important;
+      color: #fff !important;
+    }
+
+    /* ---- FOOTER ---- */
+    body.light-mode footer {
+      background: #0F172A !important;
+      color: #cbd5e1;
+      border-top-color: rgba(56, 189, 248, 0.15) !important;
+    }
+
+    body.light-mode footer h2,
+    body.light-mode footer h3,
+    body.light-mode footer h4 {
+      color: var(--accent) !important;
+    }
+
+    body.light-mode footer .text-gray-400 {
+      color: #94a3b8 !important;
+    }
+
+    body.light-mode footer .text-yellow-400 {
+      color: var(--accent) !important;
+    }
+
+    body.light-mode footer a {
+      color: #cbd5e1 !important;
+    }
+
+    body.light-mode footer a:hover {
+      color: var(--accent) !important;
+    }
+
+    body.light-mode footer .animate-marquee span {
+      color: #94a3b8 !important;
+    }
+
+    /* ---- ALTERNATING SECTION BACKGROUNDS ---- */
+    body.light-mode .bg-\[\#111111\] {
+      background: #f1f5f9 !important;
+    }
+
+    body.light-mode .bg-\[\#0d0d0d\] {
+      background: #eef2f7 !important;
+    }
+
+    body.light-mode .bg-black {
+      background: #0F172A !important;
+    }
+
+    body.light-mode .bg-black\/80 {
+      background: rgba(255, 255, 255, 0.95) !important;
+    }
+
+    body.light-mode .border-yellow-500\/10 {
+      border-color: #e2e8f0 !important;
+    }
+
+    body.light-mode .border-yellow-500\/20 {
+      border-color: #cbd5e1 !important;
+    }
+  </style>
+</head>
+
+<body class="text-white">
+
+  <!-- Prevent flash: apply theme immediately -->
+  <script>
+      (function () {
+        var s = localStorage.getItem('theme');
+        if (s === 'light') document.body.classList.add('light-mode');
+      })();
+  </script>
+
+  <!-- =========== SIDEBAR OVERLAY =========== -->
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- =========== SIDEBAR =========== -->
+  <div id="sidebar">
+    <button class="sidebar-close" onclick="closeSidebar()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="sidebar-logo">
+      <img src="./images/logo.jpeg" alt="Logo"
+        style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);" />
+      <span style="font-size:1.3rem;font-weight:900;color:var(--accent);">Ceytrixsoft</span>
+    </div>
+    <nav class="sidebar-links">
+      <a href="#home" onclick="closeSidebar()"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="#about" onclick="closeSidebar()"><i class="fa-solid fa-circle-info"></i> About</a>
+      <a href="#services" onclick="closeSidebar()"><i class="fa-solid fa-gear"></i> Services</a>
+      <a href="#tech" onclick="closeSidebar()"><i class="fa-solid fa-layer-group"></i> Tech Stack</a>
+      <a href="#projects" onclick="closeSidebar()"><i class="fa-solid fa-briefcase"></i> Projects</a>
+      <a href="#team" onclick="closeSidebar()"><i class="fa-solid fa-users"></i> Team</a>
+      <a href="#contact" onclick="closeSidebar()"><i class="fa-solid fa-envelope"></i> Contact</a>
     </nav>
+    <button class="sidebar-btn" onclick="closeSidebar()">🚀 Start Project</button>
+  </div>
 
-    <!-- ================= HERO SECTION ================= -->
-    <section
-      id="home"
-      class="min-h-screen flex items-center hero-bg relative overflow-hidden px-6"
-    >
-      <div
-        class="absolute top-20 left-0 w-[500px] h-[500px] bg-yellow-500/10 blur-[120px] rounded-full"
-      ></div>
-      <div
-        class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-yellow-400/10 blur-[100px] rounded-full"
-      ></div>
+  <!-- ================= NAVBAR ================= -->
+  <nav
+    style="position:fixed;top:0;left:0;width:100%;z-index:500;background:rgba(15,23,42,0.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(56,189,248,0.1);">
+    <div
+      style="max-width:1280px;margin:0 auto;padding:0.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;">
 
-      <div
-        class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center pt-24"
-      >
-        <!-- LEFT -->
-        <div>
-          <p
-            class="uppercase tracking-[6px] text-yellow-400 mb-5 font-semibold"
-          >
-            Welcome To Ceytrixsoft
-          </p>
+      <!-- LOGO -->
+      <!--a href="#" style="display:flex;align-items:center;gap:0.6rem;text-decoration:none;">
+        <img src="#" alt="Ceytrixsoft Logo" style="height:42px;width:42px;object-fit:cover;border-radius:50%;border:2px solid var(--accent);" />
+        <span style="font-size:1.5rem;font-weight:900;color:var(--accent);letter-spacing:-0.5px;">Ceytrixsoft</span>
+      </a>-->
 
-          <h1 class="text-5xl md:text-7xl font-black leading-tight mb-8">
-            We Build
-            <span class="text-yellow-400">Modern</span>
-            Digital Solutions
-          </h1>
+      <!-- DESKTOP LINKS -->
+      <ul style="display:flex;align-items:center;gap:2rem;list-style:none;margin:0;padding:0;" class="desktop-nav">
+        <li><a href="#home"
+            style="color:#cbd5e1;text-decoration:none;font-weight:500;font-size:0.95rem;transition:color .2s;"
+            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#cbd5e1'">Home</a></li>
+        <li><a href="#about"
+            style="color:#cbd5e1;text-decoration:none;font-weight:500;font-size:0.95rem;transition:color .2s;"
+            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#cbd5e1'">About</a></li>
+        <li><a href="#services"
+            style="color:#cbd5e1;text-decoration:none;font-weight:500;font-size:0.95rem;transition:color .2s;"
+            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#cbd5e1'">Services</a></li>
+        <li><a href="#projects"
+            style="color:#cbd5e1;text-decoration:none;font-weight:500;font-size:0.95rem;transition:color .2s;"
+            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#cbd5e1'">Projects</a></li>
+        <li><a href="#team"
+            style="color:#cbd5e1;text-decoration:none;font-weight:500;font-size:0.95rem;transition:color .2s;"
+            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#cbd5e1'">Team</a></li>
+        <li><a href="#contact"
+            style="color:#cbd5e1;text-decoration:none;font-weight:500;font-size:0.95rem;transition:color .2s;"
+            onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#cbd5e1'">Contact</a></li>
+      </ul>
 
-          <p class="text-gray-300 text-lg leading-relaxed mb-10 max-w-2xl">
-            Ceytrixsoft is a professional software company delivering
-            world-class web applications, mobile applications, UI/UX designs,
-            cloud solutions, and advanced IT services for startups, businesses,
-            and enterprises.
-          </p>
-
-          <div class="flex flex-wrap gap-5 mb-10">
-            <button
-              class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-4 rounded-full font-bold yellow-glow transition"
-            >
-              Explore Services
-            </button>
-
-            <button
-              class="border border-yellow-400 hover:bg-yellow-400 hover:text-black text-yellow-400 px-8 py-4 rounded-full font-semibold transition"
-            >
-              View Portfolio
-            </button>
-          </div>
-
-          <!-- STATS -->
-          <div class="grid grid-cols-3 gap-6 mt-10">
-            <div>
-              <h2 class="text-4xl font-black text-yellow-400">150+</h2>
-              <p class="text-gray-400">Projects</p>
-            </div>
-
-            <div>
-              <h2 class="text-4xl font-black text-yellow-400">100+</h2>
-              <p class="text-gray-400">Clients</p>
-            </div>
-
-            <div>
-              <h2 class="text-4xl font-black text-yellow-400">5+</h2>
-              <p class="text-gray-400">Years</p>
-            </div>
+      <!-- DESKTOP BUTTON + THEME TOGGLE -->
+      <div style="display:flex;align-items:center;gap:1rem;" class="desktop-nav">
+        <!-- Theme Toggle -->
+        <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+          <div class="toggle-thumb" id="toggleThumb">
+            <span id="toggleIcon">🌙</span>
           </div>
         </div>
+        <a href="#contact"
+          style="background:var(--primary);color:#fff;padding:0.55rem 1.4rem;border-radius:50px;font-weight:700;font-size:0.9rem;text-decoration:none;transition:background .2s;"
+          onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--primary)'">Start
+          Project</a>
+      </div>
 
-        <!-- RIGHT -->
-        <div class="relative">
-          <div class="glass rounded-[40px] p-8 yellow-glow">
-            <div
-              class="bg-[#111111] rounded-3xl p-8 border border-yellow-500/10"
-            >
-              <div class="flex gap-3 mb-8">
-                <div class="w-4 h-4 rounded-full bg-red-500"></div>
-                <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
-                <div class="w-4 h-4 rounded-full bg-green-500"></div>
-              </div>
+      <!-- HAMBURGER + Mobile Theme Toggle -->
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div class="theme-toggle" id="themeToggleMobile" onclick="toggleTheme()" title="Toggle"
+          style="width:48px;height:25px;">
+          <div class="toggle-thumb" id="toggleThumbMobile" style="width:18px;height:18px;font-size:10px;">
+            <span id="toggleIconMobile">🌙</span>
+          </div>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="openSidebar()" title="Open Menu">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+    <!-- Hide desktop nav on mobile via responsive style -->
+    <style>
+      @media (max-width:1023px) {
+        .desktop-nav {
+          display: none !important;
+        }
+      }
 
-              <div class="space-y-5">
-                <div class="h-5 bg-yellow-400 rounded-full w-3/4"></div>
-                <div class="h-5 bg-gray-700 rounded-full"></div>
-                <div class="h-5 bg-gray-700 rounded-full w-5/6"></div>
+      @media (min-width:1024px) {
 
-                <div class="grid grid-cols-2 gap-5 mt-8">
-                  <div class="bg-yellow-400 text-black rounded-3xl p-6">
-                    <h3 class="font-black text-2xl mb-2">Web Apps</h3>
-                    <p class="font-medium">Modern Business Systems</p>
-                  </div>
+        /* On desktop, hide the mobile toggle wrapper (second div in nav) */
+        nav>div>div:last-child .theme-toggle {
+          display: none !important;
+        }
 
-                  <div class="glass rounded-3xl p-6">
-                    <h3 class="font-black text-2xl text-yellow-400 mb-2">
-                      Mobile Apps
-                    </h3>
-                    <p class="text-gray-300">Android & iOS Solutions</p>
-                  </div>
+        .hamburger {
+          display: none !important;
+        }
+      }
 
-                  <div class="glass rounded-3xl p-6">
-                    <h3 class="font-black text-2xl text-yellow-400 mb-2">
-                      UI/UX
-                    </h3>
-                    <p class="text-gray-300">Modern User Experiences</p>
-                  </div>
+      /* Adjust mobile toggle thumb on light mode */
+      body.light-mode #themeToggleMobile .toggle-thumb {
+        left: 26px;
+      }
+    </style>
+  </nav>
 
-                  <div
-                    class="bg-black border border-yellow-500/20 rounded-3xl p-6"
-                  >
-                    <h3 class="font-black text-2xl text-yellow-400 mb-2">
-                      Cloud
-                    </h3>
-                    <p class="text-gray-300">Scalable Infrastructure</p>
-                  </div>
+  <!-- ================= HERO SECTION ================= -->
+  <section id="home" class="min-h-screen flex items-center hero-bg relative overflow-hidden px-6">
+    <div class="absolute top-20 left-0 w-[500px] h-[500px] bg-yellow-500/10 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-yellow-400/10 blur-[100px] rounded-full"></div>
+
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center pt-24">
+      <!-- LEFT -->
+      <div>
+        <p class="uppercase tracking-[6px] text-yellow-400 mb-5 font-semibold">
+          Welcome To Ceytrixsoft
+        </p>
+
+        <h1 class="text-5xl md:text-7xl font-black leading-tight mb-8">
+          We Build
+          <span class="text-yellow-400">Modern</span>
+          Digital Solutions
+        </h1>
+
+        <p class="text-gray-300 text-lg leading-relaxed mb-10 max-w-2xl">
+          Ceytrixsoft is a professional software company delivering
+          world-class web applications, mobile applications, UI/UX designs,
+          cloud solutions, and advanced IT services for startups, businesses,
+          and enterprises.
+        </p>
+
+        <div class="flex flex-wrap gap-5 mb-10">
+          <button
+            class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-4 rounded-full font-bold yellow-glow transition">
+            Explore Services
+          </button>
+
+          <button
+            class="border border-yellow-400 hover:bg-yellow-400 hover:text-black text-yellow-400 px-8 py-4 rounded-full font-semibold transition">
+            View Portfolio
+          </button>
+        </div>
+
+        <!-- STATS -->
+        <div class="grid grid-cols-3 gap-6 mt-10">
+          <div>
+            <h2 class="text-4xl font-black text-yellow-400">150+</h2>
+            <p class="text-gray-400">Projects</p>
+          </div>
+
+          <div>
+            <h2 class="text-4xl font-black text-yellow-400">100+</h2>
+            <p class="text-gray-400">Clients</p>
+          </div>
+
+          <div>
+            <h2 class="text-4xl font-black text-yellow-400">5+</h2>
+            <p class="text-gray-400">Years</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="relative">
+        <div class="glass rounded-[40px] p-8 yellow-glow">
+          <div class="bg-[#111111] rounded-3xl p-8 border border-yellow-500/10">
+            <div class="flex gap-3 mb-8">
+              <div class="w-4 h-4 rounded-full bg-red-500"></div>
+              <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+              <div class="w-4 h-4 rounded-full bg-green-500"></div>
+            </div>
+
+            <div class="space-y-5">
+              <div class="h-5 bg-yellow-400 rounded-full w-3/4"></div>
+              <div class="h-5 bg-gray-700 rounded-full"></div>
+              <div class="h-5 bg-gray-700 rounded-full w-5/6"></div>
+
+              <div class="grid grid-cols-2 gap-5 mt-8">
+                <div class="bg-yellow-400 text-black rounded-3xl p-6">
+                  <h3 class="font-black text-2xl mb-2">Web Apps</h3>
+                  <p class="font-medium">Modern Business Systems</p>
+                </div>
+
+                <div class="glass rounded-3xl p-6">
+                  <h3 class="font-black text-2xl text-yellow-400 mb-2">
+                    Mobile Apps
+                  </h3>
+                  <p class="text-gray-300">Android & iOS Solutions</p>
+                </div>
+
+                <div class="glass rounded-3xl p-6">
+                  <h3 class="font-black text-2xl text-yellow-400 mb-2">
+                    UI/UX
+                  </h3>
+                  <p class="text-gray-300">Modern User Experiences</p>
+                </div>
+
+                <div class="bg-black border border-yellow-500/20 rounded-3xl p-6">
+                  <h3 class="font-black text-2xl text-yellow-400 mb-2">
+                    Cloud
+                  </h3>
+                  <p class="text-gray-300">Scalable Infrastructure</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <!-- ================= TECH STACK ================= -->
-    <section id="tech" class="py-28 px-6 bg-[#0d0d0d]">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-          <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
-            Technologies
-          </p>
+    </div>
+  </section>
+  <!-- ================= TECH STACK ================= -->
+  <section id="tech" class="py-16 px-6 bg-[#0d0d0d]">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-20">
+        <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
+          Technologies
+        </p>
 
-          <h2 class="text-5xl font-black mb-6">Our Tech Stack</h2>
+        <h2 class="text-5xl font-black mb-6">Our Tech Stack</h2>
 
-          <p class="text-gray-400 max-w-2xl mx-auto">
-            We use modern technologies and frameworks to build secure, scalable,
-            and high-performance applications.
-          </p>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          We use modern technologies and frameworks to build secure, scalable,
+          and high-performance applications.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <!-- TECH -->
+        <div class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition">
+          <i class="fa-brands fa-react text-5xl text-cyan-400 mb-4"></i>
+          <h3 class="font-bold">React</h3>
         </div>
 
-        <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
-          <!-- TECH -->
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-brands fa-react text-5xl text-cyan-400 mb-4"></i>
-            <h3 class="font-bold">React</h3>
-          </div>
+        <div class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition">
+          <i class="fa-brands fa-node-js text-5xl text-green-400 mb-4"></i>
+          <h3 class="font-bold">Node.js</h3>
+        </div>
 
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-brands fa-node-js text-5xl text-green-400 mb-4"></i>
-            <h3 class="font-bold">Node.js</h3>
-          </div>
+        <div class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition">
+          <i class="fa-brands fa-python text-5xl text-yellow-400 mb-4"></i>
+          <h3 class="font-bold">Python</h3>
+        </div>
 
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-brands fa-python text-5xl text-yellow-400 mb-4"></i>
-            <h3 class="font-bold">Python</h3>
-          </div>
+        <div class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition">
+          <i class="fa-solid fa-database text-5xl text-blue-400 mb-4"></i>
+          <h3 class="font-bold">MySQL</h3>
+        </div>
 
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-solid fa-database text-5xl text-blue-400 mb-4"></i>
-            <h3 class="font-bold">MySQL</h3>
-          </div>
+        <div class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition">
+          <i class="fa-brands fa-aws text-5xl text-orange-400 mb-4"></i>
+          <h3 class="font-bold">AWS Cloud</h3>
+        </div>
 
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-brands fa-aws text-5xl text-orange-400 mb-4"></i>
-            <h3 class="font-bold">AWS Cloud</h3>
-          </div>
-
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-solid fa-brain text-5xl text-pink-400 mb-4"></i>
-            <h3 class="font-bold">Machine Learning</h3>
-          </div>
+        <div class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition">
+          <i class="fa-solid fa-brain text-5xl text-pink-400 mb-4"></i>
+          <h3 class="font-bold">Machine Learning</h3>
         </div>
       </div>
-    </section>
-    <!-- ================= ABOUT ================= -->
-    <section id="about" class="py-28 px-6">
-      <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <img
-            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
-            class="rounded-[40px] yellow-glow"
-          />
-        </div>
-
-        <div>
-          <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
-            About Company
-          </p>
-
-          <h2 class="text-5xl font-black mb-8 leading-tight">
-            Innovative Technology For Modern Businesses
-          </h2>
-
-          <p class="text-gray-300 text-lg leading-relaxed mb-8">
-            We create professional digital experiences using modern
-            technologies, creative UI/UX design, and scalable architectures. Our
-            mission is to help businesses grow with reliable software and
-            innovative IT solutions.
-          </p>
-
-          <div class="space-y-5">
-            <div class="flex items-start gap-4">
-              <div
-                class="bg-yellow-400 text-black w-10 h-10 rounded-full flex items-center justify-center font-black"
-              >
-                ✓
-              </div>
-
-              <div>
-                <h3 class="font-bold text-xl mb-1">Professional Development</h3>
-                <p class="text-gray-400">
-                  Modern responsive websites and scalable business applications.
-                </p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div
-                class="bg-yellow-400 text-black w-10 h-10 rounded-full flex items-center justify-center font-black"
-              >
-                ✓
-              </div>
-
-              <div>
-                <h3 class="font-bold text-xl mb-1">Creative UI/UX Design</h3>
-                <p class="text-gray-400">
-                  Elegant user experiences with premium interfaces.
-                </p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div
-                class="bg-yellow-400 text-black w-10 h-10 rounded-full flex items-center justify-center font-black"
-              >
-                ✓
-              </div>
-
-              <div>
-                <h3 class="font-bold text-xl mb-1">24/7 Support</h3>
-                <p class="text-gray-400">
-                  Dedicated support and maintenance for all projects.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+    </div>
+  </section>
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="py-16 px-6">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
+          class="rounded-[40px] yellow-glow" />
       </div>
-    </section>
-    <!-- ================= SERVICES ================= -->
-    <section id="services" class="py-28 px-6 bg-[#111111]">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-          <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
-            Our Services
-          </p>
 
-          <h2 class="text-5xl font-black mb-6">Premium IT Solutions</h2>
+      <div>
+        <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
+          About Company
+        </p>
 
-          <p class="text-gray-400 max-w-2xl mx-auto">
-            We provide modern software development services with innovative
-            technology and professional support.
-          </p>
-        </div>
+        <h2 class="text-5xl font-black mb-8 leading-tight">
+          Innovative Technology For Modern Businesses
+        </h2>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- WEB -->
-          <div
-            class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i class="fa-solid fa-globe text-6xl text-yellow-400 mb-6"></i>
+        <p class="text-gray-300 text-lg leading-relaxed mb-8">
+          We create professional digital experiences using modern
+          technologies, creative UI/UX design, and scalable architectures. Our
+          mission is to help businesses grow with reliable software and
+          innovative IT solutions.
+        </p>
 
-            <h3 class="text-2xl font-bold mb-4 text-yellow-400">
-              Web Development
-            </h3>
+        <div class="space-y-5">
+          <div class="flex items-start gap-4">
+            <div class="bg-yellow-400 text-black w-10 h-10 rounded-full flex items-center justify-center font-black">
+              ✓
+            </div>
 
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Responsive Websites
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                eCommerce Platforms
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Admin Dashboards
-              </li>
-            </ul>
-          </div>
-
-          <!-- MOBILE -->
-          <div
-            class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i
-              class="fa-solid fa-mobile-screen text-6xl text-yellow-400 mb-6"
-            ></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-yellow-400">Mobile Apps</h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Android Applications
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                iOS Applications
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Cross Platform Apps
-              </li>
-            </ul>
-          </div>
-
-          <!-- DESKTOP -->
-          <div
-            class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i class="fa-solid fa-desktop text-6xl text-yellow-400 mb-6"></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-yellow-400">
-              Desktop Applications
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Windows Software
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                POS Systems
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Business Management Apps
-              </li>
-            </ul>
-          </div>
-
-          <!-- ML -->
-          <div
-            class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i class="fa-solid fa-brain text-6xl text-yellow-400 mb-6"></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-yellow-400">
-              ML Model Training
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                AI Data Training
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Machine Learning Models
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Predictive Analytics
-              </li>
-            </ul>
-          </div>
-
-          <!-- DATA -->
-          <div
-            class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i class="fa-solid fa-chart-line text-6xl text-yellow-400 mb-6"></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-yellow-400">
-              Data Analytics
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                SQL & Databases
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Power BI Dashboards
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Business Reports
-              </li>
-            </ul>
-          </div>
-
-          <!-- CLOUD -->
-          <div
-            class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i class="fa-solid fa-cloud text-6xl text-yellow-400 mb-6"></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-yellow-400">
-              Cloud Solutions
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                AWS Deployment
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Cloud Hosting
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i class="fa-solid fa-check text-yellow-400"></i>
-                Scalable Infrastructure
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= PROJECTS ================= -->
-    <section id="projects" class="py-28 px-6">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-          <p class="uppercase tracking-[5px] text-yellow-400 mb-4">Portfolio</p>
-
-          <h2 class="text-5xl font-black">Featured Projects</h2>
-        </div>
-
-        <div class="grid lg:grid-cols-2 gap-8">
-          <!-- Project 1 -->
-          <div
-            class="glass rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
-          >
-            <img
-              src="./images/porfolio-1.png"
-              class="h-64 w-full object-cover"
-            />
-
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-2xl font-bold text-yellow-400">
-                  Tuition Class Management
-                </h3>
-
-                <a
-                  href="https://696e3bf076ddcb0f4853591a--tuition-class-managemnt.netlify.app/"
-                  target="_blank"
-                  class="w-10 h-10 rounded-full border border-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-              </div>
-
-              <p class="text-gray-300 mb-6">
-                Web-based system for managing tuition classes, students,
-                schedules, and attendance efficiently.
+            <div>
+              <h3 class="font-bold text-xl mb-1">Professional Development</h3>
+              <p class="text-gray-400">
+                Modern responsive websites and scalable business applications.
               </p>
-
-              <div class="flex flex-wrap gap-3">
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >HTML</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >Vue.js</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >MySQL</span
-                >
-              </div>
             </div>
           </div>
 
-          <!-- Project 2 -->
-          <div
-            class="glass rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
-          >
-            <img
-              src="./images/porfolio-3.png"
-              class="h-64 w-full object-cover"
-            />
+          <div class="flex items-start gap-4">
+            <div class="bg-yellow-400 text-black w-10 h-10 rounded-full flex items-center justify-center font-black">
+              ✓
+            </div>
 
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-2xl font-bold text-yellow-400">
-                  VelvetVogue Clothing Store
-                </h3>
-
-                <a
-                  href="https://68c4195ab8e19c44758c3c47--incomparable-lebkuchen-69de5f.netlify.app/#"
-                  target="_blank"
-                  class="w-10 h-10 rounded-full border border-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-              </div>
-
-              <p class="text-gray-300 mb-6">
-                This VelvetVogue E-commerce Website is designed to provide a
-                modern and user friendly online shopping experience for fashion
-                and clothing products.
+            <div>
+              <h3 class="font-bold text-xl mb-1">Creative UI/UX Design</h3>
+              <p class="text-gray-400">
+                Elegant user experiences with premium interfaces.
               </p>
-
-              <div class="flex flex-wrap gap-3">
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >HTML</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >JavaScript</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >NySQL</span
-                >
-              </div>
             </div>
           </div>
 
-          <!-- Project 3 -->
-          <div
-            class="glass rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
-          >
-            <img
-              src="./images/porfolio-4.png"
-              class="h-64 w-full object-cover"
-            />
+          <div class="flex items-start gap-4">
+            <div class="bg-yellow-400 text-black w-10 h-10 rounded-full flex items-center justify-center font-black">
+              ✓
+            </div>
 
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-2xl font-bold text-yellow-400">
-                  Senulya Salon Website
-                </h3>
-
-                <a
-                  href="https://senulyasalon.com/"
-                  target="_blank"
-                  class="w-10 h-10 rounded-full border border-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-              </div>
-
-              <p class="text-gray-300 mb-6">
-                Elegant salon website with service showcases and appointment
-                booking features.
+            <div>
+              <h3 class="font-bold text-xl mb-1">24/7 Support</h3>
+              <p class="text-gray-400">
+                Dedicated support and maintenance for all projects.
               </p>
-
-              <div class="flex flex-wrap gap-3">
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >HTML</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >JavaScript</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >MySQL</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 4 -->
-          <div
-            class="glass rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
-          >
-            <img
-              src="./images/porfolio-2.png"
-              class="h-64 w-full object-cover"
-            />
-
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-2xl font-bold text-yellow-400">
-                  Kuppiya Daily Content Platform
-                </h3>
-
-                <a
-                  href="https://kuppiya-lk.vercel.app/"
-                  target="_blank"
-                  class="w-10 h-10 rounded-full border border-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-              </div>
-
-              <p class="text-gray-300 mb-6">
-                Kuppiya is a daily content platform built for quick,
-                interesting, and mind-blowing reads across trending topics and
-                knowledge-sharing content.
-              </p>
-
-              <div class="flex flex-wrap gap-3">
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >Next.js</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >Tailwind CSS</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm"
-                  >Vercel</span
-                >
-              </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <!-- ================= TEAM ================= -->
-    <section id="team" class="py-28 px-6 bg-[#111111]">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-20">
-          <p class="uppercase tracking-[5px] text-yellow-400 mb-4">Our Team</p>
+    </div>
+  </section>
+  <!-- ================= SERVICES ================= -->
+  <section id="services" class="py-16 px-6 bg-[#111111]">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-20">
+        <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
+          Our Services
+        </p>
 
-          <h2 class="text-5xl font-black">Professional Experts</h2>
-        </div>
+        <h2 class="text-5xl font-black mb-6">Premium IT Solutions</h2>
 
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Team Member 1 -->
-          <div class="glass rounded-[30px] p-8 text-center">
-            <img
-              src="./images/team-1.jpeg"
-              class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-yellow-400"
-            />
-
-            <h3 class="text-2xl font-bold mb-2">Ramesh Priyankara</h3>
-
-            <p class="text-yellow-400 mb-4">
-              Co-Founder & Full Stack Developer & UI Designer
-            </p>
-
-            <p class="text-gray-400 mb-6">
-              Experienced in frontend and backend development, UI design, and
-              building responsive and scalable modern web applications.
-            </p>
-
-            <a
-              href="https://ramesh2003priyankara.github.io/My-Protpolio-website/"
-              target="_blank"
-              class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition"
-            >
-              <i class="fa-solid fa-eye"></i>
-              View Portfolio
-            </a>
-          </div>
-
-          <!-- Team Member 2 -->
-          <div class="glass rounded-[30px] p-8 text-center">
-            <img
-              src="./images/team-2.png"
-              class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-yellow-400"
-            />
-
-            <h3 class="text-2xl font-bold mb-2">Nadeesha Ruwandima</h3>
-
-            <p class="text-yellow-400 mb-4">
-              Co-Founder, Full Stack Developer & ML Trainee
-            </p>
-
-            <p class="text-gray-400 mb-6">
-              Skilled in frontend, backend, and machine learning training with a
-              passion for creating modern digital experiences.
-            </p>
-
-            <a
-              href="https://nadeesha699.github.io/nadeesha-ruwandima/"
-              target="_blank"
-              class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition"
-            >
-              <i class="fa-solid fa-eye"></i>
-              View Portfolio
-            </a>
-          </div>
-        </div>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          We provide modern software development services with innovative
+          technology and professional support.
+        </p>
       </div>
-    </section>
 
-    <!-- ================= REVIEWS ================= -->
-    <section id="reviews" class="py-28 px-6 bg-[#111111]">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-          <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
-            Testimonials
-          </p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- WEB -->
+        <div class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500">
+          <i class="fa-solid fa-globe text-6xl text-yellow-400 mb-6"></i>
 
-          <h2 class="text-5xl font-black mb-6">Client Reviews</h2>
+          <h3 class="text-2xl font-bold mb-4 text-yellow-400">
+            Web Development
+          </h3>
 
-          <p class="text-gray-400 max-w-2xl mx-auto">
-            Trusted by startups, businesses, and enterprises worldwide.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-          <!-- REVIEW -->
-          <div class="glass rounded-[30px] p-8">
-            <div class="flex text-yellow-400 mb-5">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-
-            <p class="text-gray-300 leading-relaxed mb-6">
-              “Ceytrixsoft delivered an outstanding web platform for our
-              business. Professional team and excellent support.”
-            </p>
-
-            <div class="flex items-center gap-4">
-              <img
-                src="https://randomuser.me/api/portraits/men/45.jpg"
-                class="w-14 h-14 rounded-full border-2 border-yellow-400"
-              />
-
-              <div>
-                <h4 class="font-bold">Michael Brown</h4>
-                <p class="text-gray-400 text-sm">Business Owner</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- REVIEW -->
-          <div class="glass rounded-[30px] p-8">
-            <div class="flex text-yellow-400 mb-5">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-
-            <p class="text-gray-300 leading-relaxed mb-6">
-              “Amazing mobile app development service with modern UI/UX. Highly
-              recommended company.”
-            </p>
-
-            <div class="flex items-center gap-4">
-              <img
-                src="https://randomuser.me/api/portraits/women/65.jpg"
-                class="w-14 h-14 rounded-full border-2 border-yellow-400"
-              />
-
-              <div>
-                <h4 class="font-bold">Emily Wilson</h4>
-                <p class="text-gray-400 text-sm">Startup Founder</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- REVIEW -->
-          <div class="glass rounded-[30px] p-8">
-            <div class="flex text-yellow-400 mb-5">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-
-            <p class="text-gray-300 leading-relaxed mb-6">
-              “Their dashboard and cloud solutions improved our business
-              performance significantly.”
-            </p>
-
-            <div class="flex items-center gap-4">
-              <img
-                src="https://randomuser.me/api/portraits/men/12.jpg"
-                class="w-14 h-14 rounded-full border-2 border-yellow-400"
-              />
-
-              <div>
-                <h4 class="font-bold">Daniel Lee</h4>
-                <p class="text-gray-400 text-sm">Company Director</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= CONTACT ================= -->
-    <section id="contact" class="py-28 px-6">
-      <div class="max-w-5xl mx-auto glass rounded-[40px] p-12 yellow-glow">
-        <div class="text-center mb-14">
-          <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
-            Contact Us
-          </p>
-
-          <h2 class="text-5xl font-black mb-5">Let’s Work Together</h2>
-
-          <p class="text-gray-400">
-            Start your next project with Ceytrixsoft today.
-          </p>
-        </div>
-
-        <form class="grid md:grid-cols-2 gap-6">
-          <input
-            type="text"
-            placeholder="Your Name"
-            class="bg-black border border-yellow-500/20 rounded-2xl px-6 py-4 outline-none focus:border-yellow-400"
-          />
-
-          <input
-            type="email"
-            placeholder="Your Email"
-            class="bg-black border border-yellow-500/20 rounded-2xl px-6 py-4 outline-none focus:border-yellow-400"
-          />
-
-          <input
-            type="text"
-            placeholder="Subject"
-            class="md:col-span-2 bg-black border border-yellow-500/20 rounded-2xl px-6 py-4 outline-none focus:border-yellow-400"
-          />
-
-          <textarea
-            rows="6"
-            placeholder="Your Message"
-            class="md:col-span-2 bg-black border border-yellow-500/20 rounded-2xl px-6 py-4 outline-none focus:border-yellow-400"
-          ></textarea>
-
-          <button
-            class="bg-yellow-400 hover:bg-yellow-300 text-black py-4 rounded-2xl font-bold text-lg transition md:col-span-2"
-          >
-            Send Message
-          </button>
-        </form>
-      </div>
-    </section>
-
-    <!-- ================= MODERN FOOTER ================= -->
-    <footer class="bg-black border-t border-yellow-500/10 py-16 px-6">
-      <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
-        <!-- BRAND -->
-        <div>
-          <h2 class="text-3xl font-black text-yellow-400 mb-4">Ceytrixsoft</h2>
-
-          <p class="text-gray-400 leading-relaxed mb-6">
-            Building innovative software solutions for modern businesses and
-            startups worldwide.
-          </p>
-
-          <!-- SOCIAL ICONS -->
-          <div class="flex gap-4 text-yellow-400 text-xl">
-            <a href="#" class="hover:text-yellow-300 transition">
-              <i class="fa-brands fa-facebook"></i>
-            </a>
-
-            <a href="#" class="hover:text-yellow-300 transition">
-              <i class="fa-brands fa-instagram"></i>
-            </a>
-
-            <a href="#" class="hover:text-yellow-300 transition">
-              <i class="fa-brands fa-linkedin"></i>
-            </a>
-
-            <a href="#" class="hover:text-yellow-300 transition">
-              <i class="fa-brands fa-github"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- SERVICES -->
-        <div>
-          <h3 class="text-xl font-bold mb-5 text-yellow-400">Services</h3>
-
-          <ul class="space-y-3 text-gray-400">
-            <li class="flex items-center gap-2">
-              <i class="fa-solid fa-code text-yellow-400"></i> Web Development
+          <ul class="space-y-3 text-gray-300">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Responsive Websites
             </li>
 
-            <li class="flex items-center gap-2">
-              <i class="fa-solid fa-mobile-screen text-yellow-400"></i> Mobile
-              Apps
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              eCommerce Platforms
             </li>
 
-            <li class="flex items-center gap-2">
-              <i class="fa-solid fa-paintbrush text-yellow-400"></i> UI/UX
-              Design
-            </li>
-
-            <li class="flex items-center gap-2">
-              <i class="fa-solid fa-cloud text-yellow-400"></i> Cloud Solutions
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Admin Dashboards
             </li>
           </ul>
         </div>
 
-        <!-- CONTACT -->
-        <div>
-          <h3 class="text-xl font-bold mb-5 text-yellow-400">Contact</h3>
+        <!-- MOBILE -->
+        <div class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500">
+          <i class="fa-solid fa-mobile-screen text-6xl text-yellow-400 mb-6"></i>
 
-          <ul class="space-y-4 text-gray-400">
+          <h3 class="text-2xl font-bold mb-4 text-yellow-400">Mobile Apps</h3>
+
+          <ul class="space-y-3 text-gray-300">
             <li class="flex items-center gap-3">
-              <i class="fa-solid fa-phone text-yellow-400"></i>
-              +94 77 123 4567
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Android Applications
             </li>
 
             <li class="flex items-center gap-3">
-              <i class="fa-solid fa-envelope text-yellow-400"></i>
-              info@ceytrixsoft.com
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              iOS Applications
             </li>
 
             <li class="flex items-center gap-3">
-              <i class="fa-solid fa-headset text-yellow-400"></i>
-              24/7 Support Available
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Cross Platform Apps
             </li>
           </ul>
         </div>
 
-        <!-- LOCATION -->
-        <div>
-          <h3 class="text-xl font-bold mb-5 text-yellow-400">Location</h3>
+        <!-- DESKTOP -->
+        <div class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500">
+          <i class="fa-solid fa-desktop text-6xl text-yellow-400 mb-6"></i>
 
-          <ul class="space-y-4 text-gray-400">
-            <li class="flex items-start gap-3">
-              <i class="fa-solid fa-location-dot text-yellow-400 mt-1"></i>
-              Colombo, Sri Lanka
+          <h3 class="text-2xl font-bold mb-4 text-yellow-400">
+            Desktop Applications
+          </h3>
+
+          <ul class="space-y-3 text-gray-300">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Windows Software
+            </li>
+
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              POS Systems
+            </li>
+
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Business Management Apps
             </li>
           </ul>
+        </div>
 
-          <!-- MAP EMBED (SHOW INSIDE WEBSITE) -->
-          <div
-            class="mt-6 rounded-2xl overflow-hidden border border-yellow-500/20"
-          >
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63371.79434312019!2d79.821186!3d6.927079!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2593f0f0f0f0f%3A0x0!2sColombo!5e0!3m2!1sen!2slk!4v1715150000000"
-              width="100%"
-              height="220"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            >
-            </iframe>
+        <!-- ML -->
+        <div class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500">
+          <i class="fa-solid fa-brain text-6xl text-yellow-400 mb-6"></i>
+
+          <h3 class="text-2xl font-bold mb-4 text-yellow-400">
+            ML Model Training
+          </h3>
+
+          <ul class="space-y-3 text-gray-300">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              AI Data Training
+            </li>
+
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Machine Learning Models
+            </li>
+
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Predictive Analytics
+            </li>
+          </ul>
+        </div>
+
+        <!-- DATA -->
+        <div class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500">
+          <i class="fa-solid fa-chart-line text-6xl text-yellow-400 mb-6"></i>
+
+          <h3 class="text-2xl font-bold mb-4 text-yellow-400">
+            Data Analytics
+          </h3>
+
+          <ul class="space-y-3 text-gray-300">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              SQL & Databases
+            </li>
+
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Power BI Dashboards
+            </li>
+
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Business Reports
+            </li>
+          </ul>
+        </div>
+
+        <!-- CLOUD -->
+        <div class="glass p-8 rounded-[30px] hover:-translate-y-3 transition duration-500">
+          <i class="fa-solid fa-cloud text-6xl text-yellow-400 mb-6"></i>
+
+          <h3 class="text-2xl font-bold mb-4 text-yellow-400">
+            Cloud Solutions
+          </h3>
+
+          <ul class="space-y-3 text-gray-300">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              AWS Deployment
+            </li>
+
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Cloud Hosting
+            </li>
+
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-yellow-400"></i>
+              Scalable Infrastructure
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects" class="py-16 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-20">
+        <p class="uppercase tracking-[5px] text-yellow-400 mb-4">Portfolio</p>
+
+        <h2 class="text-5xl font-black">Featured Projects</h2>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Project 1 -->
+        <div class="glass rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300">
+          <img src="./images/porfolio-1.png" class="h-64 w-full object-cover" />
+
+          <div class="p-8">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-2xl font-bold text-yellow-400">
+                Tuition Class Management
+              </h3>
+
+              <a href="https://696e3bf076ddcb0f4853591a--tuition-class-managemnt.netlify.app/" target="_blank"
+                class="w-10 h-10 rounded-full border border-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition">
+                <i class="fa-solid fa-eye"></i>
+              </a>
+            </div>
+
+            <p class="text-gray-300 mb-6">
+              Web-based system for managing tuition classes, students,
+              schedules, and attendance efficiently.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">HTML</span>
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">Vue.js</span>
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">MySQL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="glass rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300">
+          <img src="./images/porfolio-3.png" class="h-64 w-full object-cover" />
+
+          <div class="p-8">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-2xl font-bold text-yellow-400">
+                VelvetVogue Clothing Store
+              </h3>
+
+              <a href="https://68c4195ab8e19c44758c3c47--incomparable-lebkuchen-69de5f.netlify.app/#" target="_blank"
+                class="w-10 h-10 rounded-full border border-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition">
+                <i class="fa-solid fa-eye"></i>
+              </a>
+            </div>
+
+            <p class="text-gray-300 mb-6">
+              This VelvetVogue E-commerce Website is designed to provide a
+              modern and user friendly online shopping experience for fashion
+              and clothing products.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">HTML</span>
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">JavaScript</span>
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">NySQL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="glass rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300">
+          <img src="./images/porfolio-4.png" class="h-64 w-full object-cover" />
+
+          <div class="p-8">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-2xl font-bold text-yellow-400">
+                Senulya Salon Website
+              </h3>
+
+              <a href="https://senulyasalon.com/" target="_blank"
+                class="w-10 h-10 rounded-full border border-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition">
+                <i class="fa-solid fa-eye"></i>
+              </a>
+            </div>
+
+            <p class="text-gray-300 mb-6">
+              Elegant salon website with service showcases and appointment
+              booking features.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">HTML</span>
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">JavaScript</span>
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">MySQL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="glass rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300">
+          <img src="./images/porfolio-2.png" class="h-64 w-full object-cover" />
+
+          <div class="p-8">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-2xl font-bold text-yellow-400">
+                Kuppiya Daily Content Platform
+              </h3>
+
+              <a href="https://kuppiya-lk.vercel.app/" target="_blank"
+                class="w-10 h-10 rounded-full border border-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition">
+                <i class="fa-solid fa-eye"></i>
+              </a>
+            </div>
+
+            <p class="text-gray-300 mb-6">
+              Kuppiya is a daily content platform built for quick,
+              interesting, and mind-blowing reads across trending topics and
+              knowledge-sharing content.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">Next.js</span>
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">Tailwind CSS</span>
+              <span class="px-4 py-2 rounded-full bg-yellow-400/10 text-yellow-400 text-sm">Vercel</span>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+  <!-- ================= TEAM ================= -->
+  <section id="team" class="py-16 px-6 bg-[#111111]">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-20">
+        <p class="uppercase tracking-[5px] text-yellow-400 mb-4">Our Team</p>
 
-      <!-- BOTTOM BAR -->
-      <div
-        class="border-t border-yellow-500/10 mt-12 pt-8 text-center text-gray-500 text-sm"
-      >
-        © 2026 Ceytrixsoft. All Rights Reserved.
+        <h2 class="text-5xl font-black">Professional Experts</h2>
       </div>
-    </footer>
-  </body>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Team Member 1 -->
+        <div class="glass rounded-[30px] p-8 text-center">
+          <img src="./images/team-1.jpeg" class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-yellow-400" />
+
+          <h3 class="text-2xl font-bold mb-2">Ramesh Priyankara</h3>
+
+          <p class="text-yellow-400 mb-4">
+            Co-Founder & Full Stack Developer & UI Designer
+          </p>
+
+          <p class="text-gray-400 mb-6">
+            Experienced in frontend and backend development, UI design, and
+            building responsive and scalable modern web applications.
+          </p>
+
+          <a href="https://ramesh2003priyankara.github.io/My-Protpolio-website/" target="_blank"
+            class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition">
+            <i class="fa-solid fa-eye"></i>
+            View Portfolio
+          </a>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="glass rounded-[30px] p-8 text-center">
+          <img src="./images/team-2.png" class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-yellow-400" />
+
+          <h3 class="text-2xl font-bold mb-2">Nadeesha Ruwandima</h3>
+
+          <p class="text-yellow-400 mb-4">
+            Co-Founder, Full Stack Developer & ML Trainee
+          </p>
+
+          <p class="text-gray-400 mb-6">
+            Skilled in frontend, backend, and machine learning training with a
+            passion for creating modern digital experiences.
+          </p>
+
+          <a href="https://nadeesha699.github.io/nadeesha-ruwandima/" target="_blank"
+            class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black transition">
+            <i class="fa-solid fa-eye"></i>
+            View Portfolio
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS ================= -->
+  <section id="reviews" class="py-16 px-6 bg-[#111111]">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-20">
+        <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
+          Testimonials
+        </p>
+
+        <h2 class="text-5xl font-black mb-6">Client Reviews</h2>
+
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          Trusted by startups, businesses, and enterprises worldwide.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- REVIEW -->
+        <div class="glass rounded-[30px] p-8">
+          <div class="flex text-yellow-400 mb-5">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+
+          <p class="text-gray-300 leading-relaxed mb-6">
+            " Excellent software company for web and mobile app development.
+            Their team delivered our eCommerce platform on time with
+            outstanding quality."
+          </p>
+
+          <div class="flex items-center gap-4">
+            <div>
+              <h4 class="font-bold">Mr. Lakshan hiranya</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- REVIEW -->
+        <div class="glass rounded-[30px] p-8">
+          <div class="flex text-yellow-400 mb-5">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+
+          <p class="text-gray-300 leading-relaxed mb-6">
+            " Professional developers with strong knowledge in AI, Machine
+            Learning, and cloud solutions. Highly recommended in Sri Lanka."
+          </p>
+
+          <div class="flex items-center gap-4">
+            <div>
+              <h4 class="font-bold">Mr. Harsha Priyankara</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- REVIEW -->
+        <div class="glass rounded-[30px] p-8">
+          <div class="flex text-yellow-400 mb-5">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+
+          <p class="text-gray-300 leading-relaxed mb-6">
+            " They created our POS system and business dashboard perfectly.
+            Very responsive and supportive team."
+          </p>
+
+          <div class="flex items-center gap-4">
+            <div>
+              <h4 class="font-bold">Mrs. Melani Rukshani</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="py-16 px-6">
+    <div class="max-w-5xl mx-auto glass rounded-[40px] p-12 yellow-glow">
+      <div class="text-center mb-14">
+        <p class="uppercase tracking-[5px] text-yellow-400 mb-4">
+          Contact Us
+        </p>
+
+        <h2 class="text-5xl font-black mb-5">Let’s Work Together</h2>
+
+        <p class="text-gray-400">
+          Start your next project with Ceytrixsoft today.
+        </p>
+      </div>
+
+      <form class="grid md:grid-cols-2 gap-6">
+        <input type="text" placeholder="Your Name"
+          class="bg-black border border-yellow-500/20 rounded-2xl px-6 py-4 outline-none focus:border-yellow-400" />
+
+        <input type="email" placeholder="Your Email"
+          class="bg-black border border-yellow-500/20 rounded-2xl px-6 py-4 outline-none focus:border-yellow-400" />
+
+        <input type="text" placeholder="Subject"
+          class="md:col-span-2 bg-black border border-yellow-500/20 rounded-2xl px-6 py-4 outline-none focus:border-yellow-400" />
+
+        <textarea rows="6" placeholder="Your Message"
+          class="md:col-span-2 bg-black border border-yellow-500/20 rounded-2xl px-6 py-4 outline-none focus:border-yellow-400"></textarea>
+
+        <button
+          class="bg-yellow-400 hover:bg-yellow-300 text-black py-4 rounded-2xl font-bold text-lg transition md:col-span-2">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= MODERN FOOTER ================= -->
+  <footer class="bg-black border-t border-yellow-500/10 py-10 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <!-- BRAND -->
+      <div>
+        <h2 class="text-3xl font-black text-yellow-400 mb-4">Ceytrixsoft</h2>
+
+        <p class="text-gray-400 leading-relaxed mb-6">
+          Building innovative software solutions for modern businesses and
+          startups worldwide.
+        </p>
+
+        <!-- SOCIAL ICONS -->
+        <div class="flex gap-4 text-yellow-400 text-xl">
+          <a href="#" class="hover:text-yellow-300 transition">
+            <i class="fa-brands fa-facebook"></i>
+          </a>
+
+          <a href="#" class="hover:text-yellow-300 transition">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <a href="#" class="hover:text-yellow-300 transition">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+
+          <a href="#" class="hover:text-yellow-300 transition">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- SERVICES -->
+      <div>
+        <h3 class="text-xl font-bold mb-5 text-yellow-400">Services</h3>
+
+        <ul class="space-y-3 text-gray-400">
+          <li class="flex items-center gap-2">
+            <i class="fa-solid fa-code text-yellow-400"></i> Web Development
+          </li>
+
+          <li class="flex items-center gap-2">
+            <i class="fa-solid fa-mobile-screen text-yellow-400"></i> Mobile
+            Apps
+          </li>
+
+          <li class="flex items-center gap-2">
+            <i class="fa-solid fa-paintbrush text-yellow-400"></i> UI/UX
+            Design
+          </li>
+
+          <li class="flex items-center gap-2">
+            <i class="fa-solid fa-cloud text-yellow-400"></i> Cloud Solutions
+          </li>
+        </ul>
+      </div>
+
+      <!-- CONTACT -->
+      <div>
+        <h3 class="text-xl font-bold mb-5 text-yellow-400">Contact</h3>
+
+        <ul class="space-y-4 text-gray-400">
+          <li class="flex items-center gap-3">
+            <i class="fa-solid fa-phone text-yellow-400"></i>
+            +94 77 123 4567
+          </li>
+
+          <li class="flex items-center gap-3">
+            <i class="fa-solid fa-envelope text-yellow-400"></i>
+            info@ceytrixsoft.com
+          </li>
+
+          <li class="flex items-center gap-3">
+            <i class="fa-solid fa-headset text-yellow-400"></i>
+            24/7 Support Available
+          </li>
+        </ul>
+      </div>
+
+      <!-- LOCATION -->
+      <div>
+        <h3 class="text-xl font-bold mb-5 text-yellow-400">Location</h3>
+
+        <ul class="space-y-4 text-gray-400">
+          <li class="flex items-start gap-3">
+            <i class="fa-solid fa-location-dot text-yellow-400 mt-1"></i>
+            Mathara, Sri Lanka
+          </li>
+        </ul>
+
+        <!-- MAP EMBED (SHOW INSIDE WEBSITE) -->
+        <div class="mt-6 rounded-2xl overflow-hidden border border-yellow-500/20">
+          <iframe src="https://www.google.com/maps?q=Matara,Sri Lanka&output=embed" width="100%" height="250"
+            style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div
+      class="border-t border-yellow-500/10 mt-12 pt-8 text-center text-gray-500 text-sm overflow-hidden flex items-center">
+      <div class="animate-marquee items-center gap-3 w-full">
+        <img src="./images/logo.jpeg" alt="Ceytrixsoft Logo" class="h-6 w-6 object-cover rounded-full" />
+        <span>© 2026 Ceytrixsoft. All Rights Reserved.</span>
+      </div>
+    </div>
+  </footer>
   <script>
-    function toggleMenu() {
-      const menu = document.getElementById("mobileMenu");
-
-      if (menu.classList.contains("max-h-0")) {
-        menu.classList.remove("max-h-0", "opacity-0");
-        menu.classList.add("max-h-[500px]", "opacity-100");
-      } else {
-        menu.classList.add("max-h-0", "opacity-0");
-        menu.classList.remove("max-h-[500px]", "opacity-100");
-      }
+    // ---- SIDEBAR ----
+    function openSidebar() {
+      document.getElementById('sidebar').classList.add('open');
+      document.getElementById('sidebar-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebar-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+    // ---- NAVBAR SCROLL SHADOW ----
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      nav.style.boxShadow = window.scrollY > 50 ? '0 4px 32px rgba(0,0,0,0.5)' : 'none';
+    });
+
+    // ---- DARK / LIGHT MODE TOGGLE ----
+    function applyTheme(mode) {
+      const isLight = mode === 'light';
+      document.body.classList.toggle('light-mode', isLight);
+
+      // Update icons for ALL toggles
+      ['toggleIcon', 'toggleIconMobile'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = isLight ? '☀️' : '🌙';
+      });
+
+      localStorage.setItem('theme', mode);
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.contains('light-mode');
+      applyTheme(isLight ? 'dark' : 'light');
+    }
+
+    // ---- INIT THEME ON LOAD ----
+    (function () {
+      const saved = localStorage.getItem('theme') || 'dark';
+      applyTheme(saved);
+    })();
   </script>
+</body>
+
 </html>
