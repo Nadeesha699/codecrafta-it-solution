@@ -26,7 +26,7 @@ const textInterval = setInterval(() => {
   }
 }, 700);
 
-// Loader timeout (5 seconds)
+// Loader timeout (3 seconds)
 setTimeout(() => {
   clearInterval(textInterval);
 
@@ -49,7 +49,7 @@ setTimeout(() => {
     // enable scrolling
     document.body.classList.remove("overflow-hidden");
   }, 800);
-}, 5000);
+}, 3000);
 
 // ---- SIDEBAR ----
 function openSidebar() {
