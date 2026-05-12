@@ -48,3 +48,40 @@ function toggleTheme() {
   const saved = localStorage.getItem("theme") || "dark";
   applyTheme(saved);
 })();
+
+ document
+    .getElementById("contactForm")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const subject = document.getElementById("subject").value;
+      const message = document.getElementById("message").value;
+
+      // Open Gmail compose window
+      const gmailLink =
+        `https://mail.google.com/mail/?view=cm&fs=1&to=ceytrixsoft@gmail.com` +
+        `&su=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(
+          "Name: " +
+            name +
+            "\nEmail: " +
+            email +
+            "\n\nMessage:\n" +
+            message
+        )}`;
+
+      window.open(gmailLink, "_blank");
+
+      // Show Toast
+      const toast = document.getElementById("toast");
+      toast.classList.remove("hidden");
+
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 3000);
+
+      // Reset Form
+      document.getElementById("contactForm").reset();
+    });
