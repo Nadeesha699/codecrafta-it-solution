@@ -56,6 +56,15 @@
       };
     </script>
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
@@ -69,14 +78,67 @@
     <script src="script.js" defer></script>
   </head>
   <body
-    class="bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100"
+    class="bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100 overflow-hidden"
   >
+    <!-- Loading Screen -->
+    <div
+      id="loader"
+      class="fixed inset-0 bg-[#050816] flex flex-col items-center justify-center z-50"
+    >
+      <!-- Logo Circle -->
+      <div class="relative float">
+        <div
+          class="w-28 h-28 rounded-full border-4 border-cyan-400 border-t-transparent animate-spin glow"
+        ></div>
+
+        <!-- Center Logo -->
+        <div
+          class="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold"
+        >
+          &lt;/&gt;
+        </div>
+      </div>
+
+      <!-- Company Name -->
+      <h1
+        class="mt-8 text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent tracking-wide"
+      >
+        Ceytrixsoft
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-gray-400 mt-2 tracking-[4px] text-sm uppercase">
+        IT Solution
+      </p>
+
+      <!-- Progress Bar -->
+      <div class="w-72 h-2 bg-gray-800 rounded-full mt-10 overflow-hidden">
+        <div
+          class="progress-bar h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
+        ></div>
+      </div>
+
+      <!-- Loading Text -->
+      <p id="loadingText" class="text-gray-400 mt-4 text-sm">
+        Initializing System...
+      </p>
+    </div>
+
     <!-- OVERLAY -->
     <div
       id="sidebar-overlay"
       onclick="closeSidebar()"
       class="fixed inset-0 z-[999] hidden bg-black/50 backdrop-blur-sm"
     ></div>
+    <style>
+      #sidebar.open {
+        right: 0;
+      }
+
+      #sidebar-overlay.open {
+        display: block;
+      }
+    </style>
 
     <!-- SIDEBAR -->
     <aside
@@ -93,72 +155,83 @@
 
       <!-- LOGO -->
       <div class="mb-8 flex items-center gap-3">
-        <img
-          src="./images/logo.png"
-          alt="Logo"
-          class="h-11 w-11 rounded-full border border-sky-400 object-cover"
-        />
+        <a href="#home" class="flex items-center gap-2">
+          <img
+            src="./images/logo.png"
+            alt="Logo"
+            class="h-12 w-auto object-contain"
+          />
+        </a>
       </div>
 
       <!-- LINKS -->
-      <nav class="flex flex-1 flex-col gap-1">
+      <div class="flex flex-1 flex-col gap-1">
         <a
           href="#home"
-          class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-700 dark:text-slate-300 transition hover:bg-sky-500/10 hover:text-sky-500"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-blue-700/10 hover:text-blue-700 dark:hover:bg-sky-500/10 dark:hover:text-sky-500"
         >
-          <i class="fa-solid fa-house text-sky-500"></i>
+          <i class="fa-solid fa-house dark:text-sky-500 text-blue-700"></i>
           Home
         </a>
 
         <a
           href="#about"
-          class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-700 dark:text-slate-300 transition hover:bg-sky-500/10 hover:text-sky-500"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-blue-700/10 hover:text-blue-700 dark:hover:bg-sky-500/10 dark:hover:text-sky-500"
         >
-          <i class="fa-solid fa-circle-info text-sky-500"></i>
+          <i
+            class="fa-solid fa-circle-info dark:text-sky-500 text-blue-700"
+          ></i>
           About
         </a>
 
         <a
           href="#services"
-          class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-700 dark:text-slate-300 transition hover:bg-sky-500/10 hover:text-sky-500"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-blue-700/10 hover:text-blue-700 dark:hover:bg-sky-500/10 dark:hover:text-sky-500"
         >
-          <i class="fa-solid fa-gear text-sky-500"></i>
+          <i class="fa-solid fa-gear dark:text-sky-500 text-blue-700"></i>
           Services
         </a>
 
         <a
           href="#projects"
-          class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-700 dark:text-slate-300 transition hover:bg-sky-500/10 hover:text-sky-500"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-blue-700/10 hover:text-blue-700 dark:hover:bg-sky-500/10 dark:hover:text-sky-500"
         >
+          <i
+            class="fa-solid fa-diagram-project dark:text-sky-500 text-blue-700"
+          ></i>
           Projects
         </a>
 
         <a
           href="#team"
-          class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-700 dark:text-slate-300 transition hover:bg-sky-500/10 hover:text-sky-500"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-blue-700/10 hover:text-blue-700 dark:hover:bg-sky-500/10 dark:hover:text-sky-500"
         >
+          <i class="fa-solid fa-users dark:text-sky-500 text-blue-700"></i>
           Team
         </a>
 
         <a
           href="#contact"
-          class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-700 dark:text-slate-300 transition hover:bg-sky-500/10 hover:text-sky-500"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-blue-700/10 hover:text-blue-700 dark:hover:bg-sky-500/10 dark:hover:text-sky-500"
         >
+          <i class="fa-solid fa-envelope dark:text-sky-500 text-blue-700"></i>
           Contact
         </a>
-      </nav>
+      </div>
 
       <!-- BUTTON -->
-      <button
-        class="mt-6 rounded-full bg-sky-500 px-6 py-3 font-bold text-white transition hover:bg-sky-400 shadow-md"
+      <a
+        href="#contact"
+        class="flex justify-center items-center mt-6 rounded-full px-6 py-3 font-bold text-white dark:text-gray-900 dark:bg-sky-500 bg-blue-700 dark:hover:bg-sky-400 hover:bg-blue-500 shadow-md"
       >
         🚀 Start Project
-      </button>
+      </a>
     </aside>
 
     <!-- NAVBAR -->
     <nav
-      class="fixed left-0 top-0 z-[500] w-full border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-950/70 text-slate-900 dark:text-slate-100 backdrop-blur-xl"
+      id="navbar"
+      class="hidden fixed left-0 top-0 z-[500] w-full border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-950/70 text-slate-900 dark:text-slate-100 backdrop-blur-xl"
     >
       <div
         class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4"
@@ -177,7 +250,7 @@
           <li>
             <a
               href="#home"
-              class="text-slate-700 dark:text-slate-300 hover:text-sky-500 transition"
+              class="hover:text-blue-700 dark:hover:text-sky-500 dark:text-white text-gray-900 cursor-pointer transition"
             >
               Home</a
             >
@@ -186,7 +259,7 @@
           <li>
             <a
               href="#about"
-              class="text-slate-700 dark:text-slate-300 hover:text-sky-500 transition"
+              class="hover:text-blue-700 dark:hover:text-sky-500 dark:text-white text-gray-900 cursor-pointer transition"
             >
               About</a
             >
@@ -195,7 +268,7 @@
           <li>
             <a
               href="#services"
-              class="text-slate-700 dark:text-slate-300 hover:text-sky-500 transition"
+              class="hover:text-blue-700 dark:hover:text-sky-500 dark:text-white text-gray-900 cursor-pointer transition"
             >
               Services</a
             >
@@ -204,7 +277,7 @@
           <li>
             <a
               href="#projects"
-              class="text-slate-700 dark:text-slate-300 hover:text-sky-500 transition"
+              class="hover:text-blue-700 dark:hover:text-sky-500 dark:text-white text-gray-900 cursor-pointer transition"
             >
               Projects</a
             >
@@ -213,7 +286,7 @@
           <li>
             <a
               href="#team"
-              class="text-slate-700 dark:text-slate-300 hover:text-sky-500 transition"
+              class="hover:text-blue-700 dark:hover:text-sky-500 dark:text-white text-gray-900 cursor-pointer transition"
             >
               Team</a
             >
@@ -222,7 +295,7 @@
           <li>
             <a
               href="#contact"
-              class="text-slate-700 dark:text-slate-300 hover:text-sky-500 transition"
+              class="hover:text-blue-700 dark:hover:text-sky-500 dark:text-white text-gray-900 cursor-pointer transition"
             >
               Contact</a
             >
@@ -261,993 +334,1025 @@
         </div>
       </div>
     </nav>
-
-    <!-- ================= HERO SECTION ================= -->
-    <section
-      id="home"
-      class="min-h-screen flex items-center hero-bg relative overflow-hidden px-6"
-    >
-      <div
-        class="absolute top-20 left-0 w-[500px] h-[500px] bg-sky-500/10 blur-[120px] rounded-full"
-      ></div>
-      <div
-        class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-sky-400/10 blur-[100px] rounded-full"
-      ></div>
-
-      <div
-        class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center pt-24"
+    <!-- MAIN CONTENT -->
+    <main id="mainContent" class="hidden min-h-screen">
+      <!-- ================= HERO SECTION ================= -->
+      <section
+        id="home"
+        class="min-h-screen flex items-center hero-bg relative overflow-hidden px-6 py-8"
       >
-        <!-- LEFT -->
-        <div>
-          <p
-            class="uppercase tracking-[6px] text-blue-700 dark:text-sky-500 mb-5 font-semibold"
-          >
-            Welcome To Ceytrixsoft
-          </p>
+        <div
+          class="absolute top-20 left-0 w-[500px] h-[500px] bg-sky-500/10 blur-[120px] rounded-full"
+        ></div>
+        <div
+          class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-sky-400/10 blur-[100px] rounded-full"
+        ></div>
 
-          <h1 class="text-5xl md:text-7xl font-black leading-tight mb-8">
-            We Build
-            <span class="text-blue-700 dark:text-sky-500">Modern</span>
-            Digital Solutions
-          </h1>
-
-          <p
-            class="dark:text-gray-300 text-gray-500 text-lg leading-relaxed mb-10 max-w-2xl"
-          >
-            Ceytrixsoft is a professional software company delivering
-            world-class web applications, mobile applications, UI/UX designs,
-            cloud solutions, and advanced IT services for startups, businesses,
-            and enterprises.
-          </p>
-
-          <div class="flex flex-wrap gap-5 mb-10">
-            <button
-              class="text-white dark:text-gray-900 dark:bg-sky-500 bg-blue-700 dark:hover:bg-sky-400 hover:bg-blue-500 px-8 py-4 rounded-full font-bold yellow-glow transition"
+        <div
+          class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center pt-24"
+        >
+          <!-- LEFT -->
+          <div>
+            <p
+              class="uppercase tracking-[6px] text-blue-700 dark:text-sky-500 mb-5 font-semibold"
             >
-              Explore Services
-            </button>
+              Welcome To Ceytrixsoft
+            </p>
 
-            <button
-              class="border text-blue-700 dark:text-sky-500 dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-gray-900 px-8 py-4 rounded-full font-semibold transition"
+            <h1 class="text-5xl md:text-7xl font-black leading-tight mb-8">
+              We Build
+              <span class="text-blue-700 dark:text-sky-500">Modern</span>
+              Digital Solutions
+            </h1>
+
+            <p
+              class="dark:text-gray-300 text-gray-500 text-lg leading-relaxed mb-10 max-w-2xl"
             >
-              View Portfolio
-            </button>
-          </div>
+              Ceytrixsoft is a professional software company delivering
+              world-class web applications, mobile applications, UI/UX designs,
+              cloud solutions, and advanced IT services for startups,
+              businesses, and enterprises.
+            </p>
 
-          <!-- STATS -->
-          <div class="grid grid-cols-3 gap-6 mt-10">
-            <div>
-              <h2 class="text-4xl font-black text-blue-700 dark:text-sky-500">
-                150+
-              </h2>
-              <p class="dark:text-gray-300 text-gray-500">Projects</p>
+            <div class="flex flex-wrap gap-5 mb-10">
+              <button
+                class="text-white dark:text-gray-900 dark:bg-sky-500 bg-blue-700 dark:hover:bg-sky-400 hover:bg-blue-500 px-8 py-4 rounded-full font-bold yellow-glow transition"
+              >
+                Explore Services
+              </button>
+
+              <button
+                class="border text-blue-700 dark:text-sky-500 dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-gray-900 px-8 py-4 rounded-full font-semibold transition"
+              >
+                View Portfolio
+              </button>
             </div>
 
-            <div>
-              <h2 class="text-4xl font-black text-blue-700 dark:text-sky-500">
-                100+
-              </h2>
-              <p class="dark:text-gray-300 text-gray-500">Clients</p>
-            </div>
-
-            <div>
-              <h2 class="text-4xl font-black text-blue-700 dark:text-sky-500">
-                5+
-              </h2>
-              <p class="dark:text-gray-300 text-gray-500">Years</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT -->
-        <div class="relative">
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[40px] p-8 yellow-glow"
-          >
-            <div
-              class="bg-[#111111] rounded-3xl p-8 border border-yellow-500/10"
-            >
-              <div class="flex gap-3 mb-8">
-                <div class="w-4 h-4 rounded-full bg-red-500"></div>
-                <div class="w-4 h-4 rounded-full bg-orange-500"></div>
-                <div class="w-4 h-4 rounded-full bg-green-500"></div>
+            <!-- STATS -->
+            <div class="grid grid-cols-3 gap-6 mt-10">
+              <div>
+                <h2 class="text-4xl font-black text-blue-700 dark:text-sky-500">
+                  150+
+                </h2>
+                <p class="dark:text-gray-300 text-gray-500">Projects</p>
               </div>
 
-              <div class="space-y-5">
-                <div
-                  class="h-5 dark:bg-sky-500 bg-blue-700 rounded-full w-3/4"
-                ></div>
-                <div class="h-5 bg-gray-700 rounded-full"></div>
-                <div class="h-5 bg-gray-700 rounded-full w-5/6"></div>
+              <div>
+                <h2 class="text-4xl font-black text-blue-700 dark:text-sky-500">
+                  100+
+                </h2>
+                <p class="dark:text-gray-300 text-gray-500">Clients</p>
+              </div>
 
-                <div class="grid grid-cols-2 gap-5 mt-8">
+              <div>
+                <h2 class="text-4xl font-black text-blue-700 dark:text-sky-500">
+                  5+
+                </h2>
+                <p class="dark:text-gray-300 text-gray-500">Years</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="relative">
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[40px] p-8 yellow-glow"
+            >
+              <div
+                class="bg-[#111111] rounded-3xl p-8 border border-yellow-500/10"
+              >
+                <div class="flex gap-3 mb-8">
+                  <div class="w-4 h-4 rounded-full bg-red-500"></div>
+                  <div class="w-4 h-4 rounded-full bg-orange-500"></div>
+                  <div class="w-4 h-4 rounded-full bg-green-500"></div>
+                </div>
+
+                <div class="space-y-5">
                   <div
-                    class="dark:bg-sky-500 bg-blue-700 text-black rounded-3xl p-6"
-                  >
-                    <h3 class="font-black text-2xl mb-2">Web Apps</h3>
-                    <p class="font-medium">Modern Business Systems</p>
-                  </div>
+                    class="h-5 dark:bg-sky-500 bg-blue-700 rounded-full w-3/4"
+                  ></div>
+                  <div class="h-5 bg-gray-700 rounded-full"></div>
+                  <div class="h-5 bg-gray-700 rounded-full w-5/6"></div>
 
-                  <div class="glass rounded-3xl p-6">
-                    <h3
-                      class="font-black text-2xl dark:text-sky-500 text-blue-700 mb-2"
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-8">
+                    <div
+                      class="dark:bg-sky-500 bg-blue-700 text-black rounded-3xl p-6"
                     >
-                      Mobile Apps
-                    </h3>
-                    <p class="text-gray-300">Android & iOS Solutions</p>
-                  </div>
+                      <h3 class="font-black text-2xl mb-2">Web Apps</h3>
+                      <p class="font-medium">Modern Business Systems</p>
+                    </div>
 
-                  <div class="glass rounded-3xl p-6">
-                    <h3
-                      class="font-black text-2xl dark:text-sky-500 text-blue-700 mb-2"
+                    <div
+                      class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6"
                     >
-                      UI/UX
-                    </h3>
-                    <p class="text-gray-300">Modern User Experiences</p>
-                  </div>
+                      <h3
+                        class="font-black text-2xl dark:text-sky-500 text-blue-700 mb-2"
+                      >
+                        Mobile Apps
+                      </h3>
+                      <p class="text-gray-300">Android & iOS Solutions</p>
+                    </div>
 
-                  <div
-                    class="bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-3xl p-6"
-                  >
-                    <h3
-                      class="font-black text-2xl dark:text-sky-500 text-blue-700 mb-2"
+                    <div
+                      class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6"
                     >
-                      Cloud
-                    </h3>
-                    <p class="text-gray-300">Scalable Infrastructure</p>
+                      <h3
+                        class="font-black text-2xl dark:text-sky-500 text-blue-700 mb-2"
+                      >
+                        UI/UX
+                      </h3>
+                      <p class="text-gray-300">Modern User Experiences</p>
+                    </div>
+
+                    <div
+                      class="bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-3xl p-6"
+                    >
+                      <h3
+                        class="font-black text-2xl dark:text-sky-500 text-blue-700 mb-2"
+                      >
+                        Cloud
+                      </h3>
+                      <p class="text-gray-300">Scalable Infrastructure</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- ================= TECH STACK ================= -->
-    <section id="tech" class="py-16 px-6 dark:bg-gray-900 bg-zinc-100">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-          <p
-            class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
-          >
-            Technologies
-          </p>
-
-          <h2 class="text-5xl font-black mb-6">Our Tech Stack</h2>
-
-          <p class="dark:text-gray-300 text-gray-500 max-w-2xl mx-auto">
-            We use modern technologies and frameworks to build secure, scalable,
-            and high-performance applications.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
-          <!-- TECH -->
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-brands fa-react text-5xl text-cyan-400 mb-4"></i>
-            <h3 class="font-bold">React</h3>
-          </div>
-
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-brands fa-node-js text-5xl text-green-400 mb-4"></i>
-            <h3 class="font-bold">Node.js</h3>
-          </div>
-
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-brands fa-python text-5xl text-orange-400 mb-4"></i>
-            <h3 class="font-bold">Python</h3>
-          </div>
-
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-solid fa-database text-5xl text-blue-400 mb-4"></i>
-            <h3 class="font-bold">MySQL</h3>
-          </div>
-
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-brands fa-aws text-5xl text-orange-400 mb-4"></i>
-            <h3 class="font-bold">AWS Cloud</h3>
-          </div>
-
-          <div
-            class="glass rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
-          >
-            <i class="fa-solid fa-brain text-5xl text-pink-400 mb-4"></i>
-            <h3 class="font-bold">Machine Learning</h3>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- ================= ABOUT ================= -->
-    <section id="about" class="py-16 px-6">
-      <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <img
-            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
-            class="rounded-[40px] yellow-glow"
-          />
-        </div>
-
-        <div>
-          <p
-            class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
-          >
-            About Company
-          </p>
-
-          <h2 class="text-5xl font-black mb-8 leading-tight">
-            Innovative Technology For Modern Businesses
-          </h2>
-
-          <p
-            class="dark:text-gray-300 text-gray-500 text-lg leading-relaxed mb-8"
-          >
-            We create professional digital experiences using modern
-            technologies, creative UI/UX design, and scalable architectures. Our
-            mission is to help businesses grow with reliable software and
-            innovative IT solutions.
-          </p>
-
-          <div class="space-y-5">
-            <div class="flex items-start gap-4">
-              <div
-                class="bg-blue-700 dark:bg-sky-500 dark:text-black text-white w-10 h-10 rounded-full flex items-center justify-center font-black"
-              >
-                ✓
-              </div>
-
-              <div>
-                <h3 class="font-bold text-xl mb-1">Professional Development</h3>
-                <p class="text-gray-400">
-                  Modern responsive websites and scalable business applications.
-                </p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div
-                class="bg-blue-700 dark:bg-sky-500 dark:text-black text-white w-10 h-10 rounded-full flex items-center justify-center font-black"
-              >
-                ✓
-              </div>
-
-              <div>
-                <h3 class="font-bold text-xl mb-1">Creative UI/UX Design</h3>
-                <p class="text-gray-400">
-                  Elegant user experiences with premium interfaces.
-                </p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-              <div
-                class="bg-blue-700 dark:bg-sky-500 dark:text-black text-white w-10 h-10 rounded-full flex items-center justify-center font-black"
-              >
-                ✓
-              </div>
-
-              <div>
-                <h3 class="font-bold text-xl mb-1">24/7 Support</h3>
-                <p class="text-gray-400">
-                  Dedicated support and maintenance for all projects.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- ================= SERVICES ================= -->
-    <section id="services" class="py-16 px-6 dark:bg-gray-900 bg-zinc-100">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-          <p
-            class="uppercase tracking-[5px] text-blue-700 dark:text-sky-50 mb-4"
-          >
-            Our Services
-          </p>
-
-          <h2 class="text-5xl font-black mb-6">Premium IT Solutions</h2>
-
-          <p class="text-gray-400 max-w-2xl mx-auto">
-            We provide modern software development services with innovative
-            technology and professional support.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- WEB -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i
-              class="fa-solid fa-globe text-6xl text-blue-700 dark:text-sky-500 mb-6"
-            ></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500">
-              Web Development
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >Responsive Websites</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >eCommerce Platforms</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >Admin Dashboards</span
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- MOBILE -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i
-              class="fa-solid fa-mobile-screen text-6xl text-blue-700 dark:text-sky-500 mb-6"
-            ></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500">
-              Mobile Apps
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >Android Applications</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >iOS Applications</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >Cross Platform Apps</span
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- DESKTOP -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i
-              class="fa-solid fa-desktop text-6xl text-blue-700 dark:text-sky-500 mb-6"
-            ></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500">
-              Desktop Applications
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >Windows Software</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900">POS Systems</span>
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >Business Management Apps</span
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- ML -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i
-              class="fa-solid fa-brain text-6xl text-blue-700 dark:text-sky-500 mb-6"
-            ></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500">
-              ML Model Training
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >AI Data Training</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900">
-                  Machine Learning Models</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900">
-                  Predictive Analytics</span
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- DATA -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i
-              class="fa-solid fa-chart-line text-6xl text-blue-700 dark:text-sky-500 mb-6"
-            ></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500">
-              Data Analytics
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >SQL & Databases</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900">
-                  Power BI Dashboards</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900">
-                  Business Reports</span
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- CLOUD -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
-          >
-            <i
-              class="fa-solid fa-cloud text-6xl text-blue-700 dark:text-sky-500 mb-6"
-            ></i>
-
-            <h3 class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500">
-              Cloud Solutions
-            </h3>
-
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >AWS Deployment</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900">
-                  Cloud Hosting</span
-                >
-              </li>
-
-              <li class="flex items-center gap-3">
-                <i
-                  class="fa-solid fa-check text-blue-700 dark:text-sky-500"
-                ></i>
-                <span class="dark:text-white text-gray-900"
-                  >Scalable Infrastructure</span
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= PROJECTS ================= -->
-    <section id="projects" class="py-16 px-6">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-          <p
-            class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
-          >
-            Portfolio
-          </p>
-
-          <h2 class="text-5xl font-black">Featured Projects</h2>
-        </div>
-
-        <div class="grid lg:grid-cols-2 gap-8">
-          <!-- Project 1 -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
-          >
-            <img
-              src="./images/porfolio-1.png"
-              class="h-64 w-full object-cover"
-            />
-
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-2xl font-bold text-blue-700 dark:text-sky-500">
-                  Tuition Class Management
-                </h3>
-
-                <a
-                  href="https://696e3bf076ddcb0f4853591a--tuition-class-managemnt.netlify.app/"
-                  target="_blank"
-                  class="w-10 h-10 rounded-full border dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-black flex items-center justify-center transition"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-              </div>
-
-              <p class="dark:text-gray-300 text-gray-500 mb-6">
-                Web-based system for managing tuition classes, students,
-                schedules, and attendance efficiently.
-              </p>
-
-              <div class="flex flex-wrap gap-3">
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >HTML</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >Vue.js</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >MySQL</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 2 -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
-          >
-            <img
-              src="./images/porfolio-3.png"
-              class="h-64 w-full object-cover"
-            />
-
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-2xl font-bold text-blue-700 dark:text-sky-500">
-                  VelvetVogue Clothing Store
-                </h3>
-
-                <a
-                  href="https://68c4195ab8e19c44758c3c47--incomparable-lebkuchen-69de5f.netlify.app/#"
-                  target="_blank"
-                  class="w-10 h-10 rounded-full border dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-black flex items-center justify-center transition"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-              </div>
-
-              <p class="dark:text-gray-300 text-gray-500 mb-6">
-                This VelvetVogue E-commerce Website is designed to provide a
-                modern and user friendly online shopping experience for fashion
-                and clothing products.
-              </p>
-
-              <div class="flex flex-wrap gap-3">
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >HTML</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >JavaScript</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >NySQL</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 3 -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
-          >
-            <img
-              src="./images/porfolio-4.png"
-              class="h-64 w-full object-cover"
-            />
-
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-2xl font-bold text-blue-700 dark:text-sky-500">
-                  Senulya Salon Website
-                </h3>
-
-                <a
-                  href="https://senulyasalon.com/"
-                  target="_blank"
-                  class="w-10 h-10 rounded-full border dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-black flex items-center justify-center transition"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-              </div>
-
-              <p class="dark:text-gray-300 text-gray-500 mb-6">
-                Elegant salon website with service showcases and appointment
-                booking features.
-              </p>
-
-              <div class="flex flex-wrap gap-3">
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >HTML</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >JavaScript</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >MySQL</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 4 -->
-          <div
-            class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
-          >
-            <img
-              src="./images/porfolio-2.png"
-              class="h-64 w-full object-cover"
-            />
-
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-2xl font-bold text-blue-700 dark:text-sky-500">
-                  Kuppiya Daily Content Platform
-                </h3>
-
-                <a
-                  href="https://kuppiya-lk.vercel.app/"
-                  target="_blank"
-                  class="w-10 h-10 rounded-full border dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-black flex items-center justify-center transition"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-              </div>
-
-              <p class="dark:text-gray-300 text-gray-500 mb-6">
-                Kuppiya is a daily content platform built for quick,
-                interesting, and mind-blowing reads across trending topics and
-                knowledge-sharing content.
-              </p>
-
-              <div class="flex flex-wrap gap-3">
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >Next.js</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >Tailwind CSS</span
-                >
-                <span
-                  class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
-                  >Vercel</span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- ================= TEAM ================= -->
-    <section id="team" class="py-16 px-6 dark:bg-gray-900 bg-zinc-100">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-20">
-          <p
-            class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
-          >
-            Our Team
-          </p>
-
-          <h2 class="text-5xl font-black">Professional Experts</h2>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Team Member 1 -->
-          <div class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] p-8 text-center">
-            <img
-              src="./images/team-1.jpeg"
-              class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-blue-700 dark:border-sky-500"
-            />
-
-            <h3 class="text-2xl font-bold mb-2">Ramesh Priyankara</h3>
-
-            <p class="text-blue-700 dark:text-sky-500 mb-4">
-              Co-Founder & Full Stack Developer & UI Designer
-            </p>
-
-            <p class="dark:text-gray-300 text-gray-500 mb-6">
-              Experienced in frontend and backend development, UI design, and
-              building responsive and scalable modern web applications.
-            </p>
-
-            <a
-              href="https://ramesh2003priyankara.github.io/My-Protpolio-website/"
-              target="_blank"
-              class="inline-flex items-center gap-3 px-6 py-3 rounded-full border text-blue-700 dark:text-sky-500 dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-gray-900 transition"
+      </section>
+      <!-- ================= TECH STACK ================= -->
+      <section id="tech" class="py-16 px-6 dark:bg-gray-900 bg-zinc-100">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-20">
+            <p
+              class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
             >
-              <i class="fa-solid fa-eye"></i>
-              View Portfolio
-            </a>
+              Technologies
+            </p>
+
+            <h2 class="text-5xl font-black mb-6">Our Tech Stack</h2>
+
+            <p class="dark:text-gray-300 text-gray-500 max-w-2xl mx-auto">
+              We use modern technologies and frameworks to build secure,
+              scalable, and high-performance applications.
+            </p>
           </div>
 
-          <!-- Team Member 2 -->
-          <div class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] p-8 text-center">
-            <img
-              src="./images/team-2.png"
-              class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-blue-700 dark:border-sky-500"
-            />
-
-            <h3 class="text-2xl font-bold mb-2">Nadeesha Ruwandima</h3>
-
-            <p class="text-blue-700 dark:text-sky-500 mb-4">
-              Co-Founder, Full Stack Developer & ML Trainee
-            </p>
-
-            <p class="dark:text-gray-300 text-gray-500 mb-6">
-              Skilled in frontend, backend, and machine learning training with a
-              passion for creating modern digital experiences.
-            </p>
-
-            <a
-              href="https://nadeesha699.github.io/nadeesha-ruwandima/"
-              target="_blank"
-              class="inline-flex items-center gap-3 px-6 py-3 rounded-full border text-blue-700 dark:text-sky-500 dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-gray-900 transition"
+          <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <!-- TECH -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
             >
-              <i class="fa-solid fa-eye"></i>
-              View Portfolio
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= REVIEWS ================= -->
-    <section id="reviews" class="py-16 px-6">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-          <p
-            class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
-          >
-            Testimonials
-          </p>
-
-          <h2 class="text-5xl font-black mb-6">Client Reviews</h2>
-
-          <p class="dark:text-gray-300 text-gray-500 max-w-2xl mx-auto">
-            Trusted by startups, businesses, and enterprises worldwide.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-          <!-- REVIEW -->
-          <div class="glass rounded-[30px] p-8">
-            <div class="flex text-orange-400 mb-5">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
+              <i class="fa-brands fa-react text-5xl text-cyan-400 mb-4"></i>
+              <h3 class="font-bold">React</h3>
             </div>
 
-            <p class="dark:text-gray-300 text-gray-500 leading-relaxed mb-6">
-              " Excellent software company for web and mobile app development.
-              Their team delivered our eCommerce platform on time with
-              outstanding quality."
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
+            >
+              <i class="fa-brands fa-node-js text-5xl text-green-400 mb-4"></i>
+              <h3 class="font-bold">Node.js</h3>
+            </div>
+
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
+            >
+              <i class="fa-brands fa-python text-5xl text-orange-400 mb-4"></i>
+              <h3 class="font-bold">Python</h3>
+            </div>
+
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
+            >
+              <i class="fa-solid fa-database text-5xl text-blue-400 mb-4"></i>
+              <h3 class="font-bold">MySQL</h3>
+            </div>
+
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
+            >
+              <i class="fa-brands fa-aws text-5xl text-orange-400 mb-4"></i>
+              <h3 class="font-bold">AWS Cloud</h3>
+            </div>
+
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[25px] p-6 text-center hover:-translate-y-2 transition"
+            >
+              <i class="fa-solid fa-brain text-5xl text-pink-400 mb-4"></i>
+              <h3 class="font-bold">Machine Learning</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ================= ABOUT ================= -->
+      <section id="about" class="py-16 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200"
+              class="rounded-[40px] yellow-glow"
+            />
+          </div>
+
+          <div>
+            <p
+              class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
+            >
+              About Company
             </p>
 
-            <div class="flex items-center gap-4">
-              <div>
-                <h4 class="font-bold">Mr. Lakshan hiranya</h4>
+            <h2 class="text-5xl font-black mb-8 leading-tight">
+              Innovative Technology For Modern Businesses
+            </h2>
+
+            <p
+              class="dark:text-gray-300 text-gray-500 text-lg leading-relaxed mb-8"
+            >
+              We create professional digital experiences using modern
+              technologies, creative UI/UX design, and scalable architectures.
+              Our mission is to help businesses grow with reliable software and
+              innovative IT solutions.
+            </p>
+
+            <div class="space-y-5">
+              <div class="flex items-start gap-4">
+                <div
+                  class="bg-blue-700 dark:bg-sky-500 dark:text-black text-white w-10 h-10 rounded-full flex items-center justify-center font-black"
+                >
+                  ✓
+                </div>
+
+                <div>
+                  <h3 class="font-bold text-xl mb-1">
+                    Professional Development
+                  </h3>
+                  <p class="text-gray-400">
+                    Modern responsive websites and scalable business
+                    applications.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div
+                  class="bg-blue-700 dark:bg-sky-500 dark:text-black text-white w-10 h-10 rounded-full flex items-center justify-center font-black"
+                >
+                  ✓
+                </div>
+
+                <div>
+                  <h3 class="font-bold text-xl mb-1">Creative UI/UX Design</h3>
+                  <p class="text-gray-400">
+                    Elegant user experiences with premium interfaces.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div
+                  class="bg-blue-700 dark:bg-sky-500 dark:text-black text-white w-10 h-10 rounded-full flex items-center justify-center font-black"
+                >
+                  ✓
+                </div>
+
+                <div>
+                  <h3 class="font-bold text-xl mb-1">24/7 Support</h3>
+                  <p class="text-gray-400">
+                    Dedicated support and maintenance for all projects.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-
-          <!-- REVIEW -->
-          <div class="glass rounded-[30px] p-8">
-            <div class="flex text-orange-400 mb-5">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-
-            <p class="dark:text-gray-300 text-gray-500 leading-relaxed mb-6">
-              " Professional developers with strong knowledge in AI, Machine
-              Learning, and cloud solutions. Highly recommended in Sri Lanka."
+        </div>
+      </section>
+      <!-- ================= SERVICES ================= -->
+      <section id="services" class="py-16 px-6 dark:bg-gray-900 bg-zinc-100">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-20">
+            <p
+              class="uppercase tracking-[5px] text-blue-700 dark:text-sky-50 mb-4"
+            >
+              Our Services
             </p>
 
-            <div class="flex items-center gap-4">
-              <div>
-                <h4 class="font-bold">Mr. Harsha Priyankara</h4>
-              </div>
-            </div>
+            <h2 class="text-5xl font-black mb-6">Premium IT Solutions</h2>
+
+            <p class="text-gray-400 max-w-2xl mx-auto">
+              We provide modern software development services with innovative
+              technology and professional support.
+            </p>
           </div>
 
-          <!-- REVIEW -->
-          <div class="glass rounded-[30px] p-8">
-            <div class="flex text-orange-400 mb-5">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- WEB -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
+            >
+              <i
+                class="fa-solid fa-globe text-6xl text-blue-700 dark:text-sky-500 mb-6"
+              ></i>
+
+              <h3
+                class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500"
+              >
+                Web Development
+              </h3>
+
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >Responsive Websites</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >eCommerce Platforms</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >Admin Dashboards</span
+                  >
+                </li>
+              </ul>
             </div>
 
-            <p class="dark:text-gray-300 text-gray-500 leading-relaxed mb-6">
-              " They created our POS system and business dashboard perfectly.
-              Very responsive and supportive team."
+            <!-- MOBILE -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
+            >
+              <i
+                class="fa-solid fa-mobile-screen text-6xl text-blue-700 dark:text-sky-500 mb-6"
+              ></i>
+
+              <h3
+                class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500"
+              >
+                Mobile Apps
+              </h3>
+
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >Android Applications</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >iOS Applications</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >Cross Platform Apps</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- DESKTOP -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
+            >
+              <i
+                class="fa-solid fa-desktop text-6xl text-blue-700 dark:text-sky-500 mb-6"
+              ></i>
+
+              <h3
+                class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500"
+              >
+                Desktop Applications
+              </h3>
+
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >Windows Software</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900">POS Systems</span>
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >Business Management Apps</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- ML -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
+            >
+              <i
+                class="fa-solid fa-brain text-6xl text-blue-700 dark:text-sky-500 mb-6"
+              ></i>
+
+              <h3
+                class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500"
+              >
+                ML Model Training
+              </h3>
+
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >AI Data Training</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900">
+                    Machine Learning Models</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900">
+                    Predictive Analytics</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- DATA -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
+            >
+              <i
+                class="fa-solid fa-chart-line text-6xl text-blue-700 dark:text-sky-500 mb-6"
+              ></i>
+
+              <h3
+                class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500"
+              >
+                Data Analytics
+              </h3>
+
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >SQL & Databases</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900">
+                    Power BI Dashboards</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900">
+                    Business Reports</span
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- CLOUD -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 p-8 rounded-[30px] hover:-translate-y-3 transition duration-500"
+            >
+              <i
+                class="fa-solid fa-cloud text-6xl text-blue-700 dark:text-sky-500 mb-6"
+              ></i>
+
+              <h3
+                class="text-2xl font-bold mb-4 text-blue-700 dark:text-sky-500"
+              >
+                Cloud Solutions
+              </h3>
+
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >AWS Deployment</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900">
+                    Cloud Hosting</span
+                  >
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <i
+                    class="fa-solid fa-check text-blue-700 dark:text-sky-500"
+                  ></i>
+                  <span class="dark:text-white text-gray-900"
+                    >Scalable Infrastructure</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PROJECTS ================= -->
+      <section id="projects" class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-20">
+            <p
+              class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
+            >
+              Portfolio
             </p>
 
-            <div class="flex items-center gap-4">
-              <div>
-                <h4 class="font-bold">Mrs. Melani Rukshani</h4>
+            <h2 class="text-5xl font-black">Featured Projects</h2>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Project 1 -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
+            >
+              <img
+                src="./images/porfolio-1.png"
+                class="h-64 w-full object-cover"
+              />
+
+              <div class="p-8">
+                <div class="flex items-center justify-between mb-4">
+                  <h3
+                    class="text-2xl font-bold text-blue-700 dark:text-sky-500"
+                  >
+                    Tuition Class Management
+                  </h3>
+
+                  <a
+                    href="https://696e3bf076ddcb0f4853591a--tuition-class-managemnt.netlify.app/"
+                    target="_blank"
+                    class="w-10 h-10 rounded-full border dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-black flex items-center justify-center transition"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+                </div>
+
+                <p class="dark:text-gray-300 text-gray-500 mb-6">
+                  Web-based system for managing tuition classes, students,
+                  schedules, and attendance efficiently.
+                </p>
+
+                <div class="flex flex-wrap gap-3">
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >HTML</span
+                  >
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >Vue.js</span
+                  >
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >MySQL</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
+            >
+              <img
+                src="./images/porfolio-3.png"
+                class="h-64 w-full object-cover"
+              />
+
+              <div class="p-8">
+                <div class="flex items-center justify-between mb-4">
+                  <h3
+                    class="text-2xl font-bold text-blue-700 dark:text-sky-500"
+                  >
+                    VelvetVogue Clothing Store
+                  </h3>
+
+                  <a
+                    href="https://68c4195ab8e19c44758c3c47--incomparable-lebkuchen-69de5f.netlify.app/#"
+                    target="_blank"
+                    class="w-10 h-10 rounded-full border dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-black flex items-center justify-center transition"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+                </div>
+
+                <p class="dark:text-gray-300 text-gray-500 mb-6">
+                  This VelvetVogue E-commerce Website is designed to provide a
+                  modern and user friendly online shopping experience for
+                  fashion and clothing products.
+                </p>
+
+                <div class="flex flex-wrap gap-3">
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >HTML</span
+                  >
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >JavaScript</span
+                  >
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >NySQL</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
+            >
+              <img
+                src="./images/porfolio-4.png"
+                class="h-64 w-full object-cover"
+              />
+
+              <div class="p-8">
+                <div class="flex items-center justify-between mb-4">
+                  <h3
+                    class="text-2xl font-bold text-blue-700 dark:text-sky-500"
+                  >
+                    Senulya Salon Website
+                  </h3>
+
+                  <a
+                    href="https://senulyasalon.com/"
+                    target="_blank"
+                    class="w-10 h-10 rounded-full border dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-black flex items-center justify-center transition"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+                </div>
+
+                <p class="dark:text-gray-300 text-gray-500 mb-6">
+                  Elegant salon website with service showcases and appointment
+                  booking features.
+                </p>
+
+                <div class="flex flex-wrap gap-3">
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >HTML</span
+                  >
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >JavaScript</span
+                  >
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >MySQL</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] overflow-hidden hover:-translate-y-2 transition duration-300"
+            >
+              <img
+                src="./images/porfolio-2.png"
+                class="h-64 w-full object-cover"
+              />
+
+              <div class="p-8">
+                <div class="flex items-center justify-between mb-4">
+                  <h3
+                    class="text-2xl font-bold text-blue-700 dark:text-sky-500"
+                  >
+                    Kuppiya Daily Content Platform
+                  </h3>
+
+                  <a
+                    href="https://kuppiya-lk.vercel.app/"
+                    target="_blank"
+                    class="w-10 h-10 rounded-full border dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-black flex items-center justify-center transition"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+                </div>
+
+                <p class="dark:text-gray-300 text-gray-500 mb-6">
+                  Kuppiya is a daily content platform built for quick,
+                  interesting, and mind-blowing reads across trending topics and
+                  knowledge-sharing content.
+                </p>
+
+                <div class="flex flex-wrap gap-3">
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >Next.js</span
+                  >
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >Tailwind CSS</span
+                  >
+                  <span
+                    class="px-4 py-2 rounded-full dark:text-sky-500 text-blue-700 dark:bg-sky-500/10 bg-blue-700/10 text-sm"
+                    >Vercel</span
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <!-- ================= TEAM ================= -->
+      <section id="team" class="py-16 px-6 dark:bg-gray-900 bg-zinc-100">
+        <div class="max-w-5xl mx-auto">
+          <div class="text-center mb-20">
+            <p
+              class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
+            >
+              Our Team
+            </p>
 
-    <!-- ================= CONTACT ================= -->
-    <section id="contact" class="py-16 px-6">
-      <div class="max-w-5xl mx-auto glass rounded-[40px] p-12 yellow-glow">
-        <div class="text-center mb-14">
-          <p
-            class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
-          >
-            Contact Us
-          </p>
+            <h2 class="text-5xl font-black">Professional Experts</h2>
+          </div>
 
-          <h2 class="text-5xl font-black mb-5">Let’s Work Together</h2>
+          <div class="grid md:grid-cols-2 gap-8">
+            <!-- Team Member 1 -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] p-8 text-center"
+            >
+              <img
+                src="./images/team-1.jpeg"
+                class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-blue-700 dark:border-sky-500"
+              />
 
-          <p class="text-gray-400">
-            Start your next project with Ceytrixsoft today.
-          </p>
+              <h3 class="text-2xl font-bold mb-2">Ramesh Priyankara</h3>
+
+              <p class="text-blue-700 dark:text-sky-500 mb-4">
+                Co-Founder & Full Stack Developer & UI Designer
+              </p>
+
+              <p class="dark:text-gray-300 text-gray-500 mb-6">
+                Experienced in frontend and backend development, UI design, and
+                building responsive and scalable modern web applications.
+              </p>
+
+              <a
+                href="https://ramesh2003priyankara.github.io/My-Protpolio-website/"
+                target="_blank"
+                class="inline-flex items-center gap-3 px-6 py-3 rounded-full border text-blue-700 dark:text-sky-500 dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-gray-900 transition"
+              >
+                <i class="fa-solid fa-eye"></i>
+                View Portfolio
+              </a>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] p-8 text-center"
+            >
+              <img
+                src="./images/team-2.png"
+                class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-blue-700 dark:border-sky-500"
+              />
+
+              <h3 class="text-2xl font-bold mb-2">Nadeesha Ruwandima</h3>
+
+              <p class="text-blue-700 dark:text-sky-500 mb-4">
+                Co-Founder, Full Stack Developer & ML Trainee
+              </p>
+
+              <p class="dark:text-gray-300 text-gray-500 mb-6">
+                Skilled in frontend, backend, and machine learning training with
+                a passion for creating modern digital experiences.
+              </p>
+
+              <a
+                href="https://nadeesha699.github.io/nadeesha-ruwandima/"
+                target="_blank"
+                class="inline-flex items-center gap-3 px-6 py-3 rounded-full border text-blue-700 dark:text-sky-500 dark:border-sky-500 border-blue-700 dark:hover:bg-sky-400 hover:bg-blue-700 hover:text-white dark:hover:text-gray-900 transition"
+              >
+                <i class="fa-solid fa-eye"></i>
+                View Portfolio
+              </a>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <form id="contactForm" class="grid md:grid-cols-2 gap-6">
-          <input
-            type="text"
-            id="name"
-            placeholder="Your Name"
-            required
-            class="bg-gray-200 dark:bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-2xl px-6 py-4 outline-none focus:border-blue-700"
-          />
+      <!-- ================= REVIEWS ================= -->
+      <section id="reviews" class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-20">
+            <p
+              class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
+            >
+              Testimonials
+            </p>
 
-          <input
-            type="email"
-            id="email"
-            placeholder="Your Email"
-            required
-            class="bg-gray-200 dark:bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-2xl px-6 py-4 outline-none focus:border-blue-700"
-          />
+            <h2 class="text-5xl font-black mb-6">Client Reviews</h2>
 
-          <input
-            type="text"
-            id="subject"
-            placeholder="Subject"
-            required
-            class="md:col-span-2 bg-gray-200 dark:bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-2xl px-6 py-4 outline-none focus:border-blue-700"
-          />
+            <p class="dark:text-gray-300 text-gray-500 max-w-2xl mx-auto">
+              Trusted by startups, businesses, and enterprises worldwide.
+            </p>
+          </div>
 
-          <textarea
-            rows="6"
-            id="message"
-            placeholder="Your Message"
-            required
-            class="md:col-span-2 bg-gray-200 dark:bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-2xl px-6 py-4 outline-none focus:border-blue-700"
-          ></textarea>
+          <div class="grid md:grid-cols-3 gap-8">
+            <!-- REVIEW -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] p-8"
+            >
+              <div class="flex text-orange-400 mb-5">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
 
-          <button
-            type="submit"
-            class="text-white dark:text-gray-900 dark:bg-sky-500 bg-blue-700 dark:hover:bg-sky-400 hover:bg-blue-500 py-4 rounded-2xl font-bold text-lg transition md:col-span-2"
-          >
-            Send Message
-          </button>
-        </form>
+              <p class="dark:text-gray-300 text-gray-500 leading-relaxed mb-6">
+                " Excellent software company for web and mobile app development.
+                Their team delivered our eCommerce platform on time with
+                outstanding quality."
+              </p>
 
-        <!-- Toast -->
+              <div class="flex items-center gap-4">
+                <div>
+                  <h4 class="font-bold">Mr. Lakshan hiranya</h4>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEW -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] p-8"
+            >
+              <div class="flex text-orange-400 mb-5">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+
+              <p class="dark:text-gray-300 text-gray-500 leading-relaxed mb-6">
+                " Professional developers with strong knowledge in AI, Machine
+                Learning, and cloud solutions. Highly recommended in Sri Lanka."
+              </p>
+
+              <div class="flex items-center gap-4">
+                <div>
+                  <h4 class="font-bold">Mr. Harsha Priyankara</h4>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEW -->
+            <div
+              class="dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[30px] p-8"
+            >
+              <div class="flex text-orange-400 mb-5">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+
+              <p class="dark:text-gray-300 text-gray-500 leading-relaxed mb-6">
+                " They created our POS system and business dashboard perfectly.
+                Very responsive and supportive team."
+              </p>
+
+              <div class="flex items-center gap-4">
+                <div>
+                  <h4 class="font-bold">Mrs. Melani Rukshani</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CONTACT ================= -->
+      <section id="contact" class="py-16 px-6">
         <div
-          id="toast"
-          class="hidden fixed top-5 right-5 bg-green-500 text-white px-6 py-4 rounded-xl shadow-lg z-50"
+          class="max-w-5xl mx-auto dark:bg-white/5 bg-black/10 backdrop-blur-xl border dark:border-white/10 border-black/20 rounded-[40px] p-12 yellow-glow"
         >
-          Message sent successfully!
-        </div>
-      </div>
-    </section>
+          <div class="text-center mb-14">
+            <p
+              class="uppercase tracking-[5px] text-blue-700 dark:text-sky-500 mb-4"
+            >
+              Contact Us
+            </p>
 
+            <h2 class="text-5xl font-black mb-5">Let’s Work Together</h2>
+
+            <p class="text-gray-400">
+              Start your next project with Ceytrixsoft today.
+            </p>
+          </div>
+
+          <form id="contactForm" class="grid md:grid-cols-2 gap-6">
+            <input
+              type="text"
+              id="name"
+              placeholder="Your Name"
+              required
+              class="bg-gray-200 dark:bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-2xl px-6 py-4 outline-none focus:border-blue-700"
+            />
+
+            <input
+              type="email"
+              id="email"
+              placeholder="Your Email"
+              required
+              class="bg-gray-200 dark:bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-2xl px-6 py-4 outline-none focus:border-blue-700"
+            />
+
+            <input
+              type="text"
+              id="subject"
+              placeholder="Subject"
+              required
+              class="md:col-span-2 bg-gray-200 dark:bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-2xl px-6 py-4 outline-none focus:border-blue-700"
+            />
+
+            <textarea
+              rows="6"
+              id="message"
+              placeholder="Your Message"
+              required
+              class="md:col-span-2 bg-gray-200 dark:bg-gray-900 border border-blue-700 dark:border-sky-500 rounded-2xl px-6 py-4 outline-none focus:border-blue-700"
+            ></textarea>
+
+            <button
+              type="submit"
+              class="text-white dark:text-gray-900 dark:bg-sky-500 bg-blue-700 dark:hover:bg-sky-400 hover:bg-blue-500 py-4 rounded-2xl font-bold text-lg transition md:col-span-2"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
     <!-- ================= PREMIUM MODERN FOOTER ================= -->
     <footer
       class="relative overflow-hidden border-t border-slate-200 dark:border-slate-800 bg-gradient-to-b from-white to-slate-50 dark:from-slate-950 dark:to-slate-900 text-slate-700 dark:text-slate-300 py-16 px-6"
@@ -1274,14 +1379,20 @@
           <!-- SOCIAL -->
           <div class="flex gap-4 text-lg">
             <a
+              href="https://www.facebook.com/profile.php?id=61589306144565"
+              target="_blank"
               class="hover:text-gray-900 dark:hover:text-white text-blue-700 cursor-pointer transition"
               ><i class="fa-brands fa-facebook"></i
             ></a>
             <a
+              href="https://www.linkedin.com/company/ceytrixsoft-solutions/?viewAsMember=true"
+              target="_blank"
               class="hover:text-gray-900 dark:hover:text-white text-sky-600 cursor-pointer transition"
               ><i class="fa-brands fa-linkedin"></i
             ></a>
             <a
+              href="https://whatsapp.com/channel/0029Vb7moGhDDmFQOyzyw41L"
+              target="_blank"
               class="hover:text-gray-900 dark:hover:text-white text-green-700 cursor-pointer transition"
               ><i class="fa-brands fa-whatsapp"></i
             ></a>
@@ -1401,10 +1512,10 @@
           </h3>
 
           <div class="space-y-4 text-sm">
-            <div class="flex items-center gap-3">
+            <!-- <div class="flex items-center gap-3">
               <i class="fa-solid fa-phone text-blue-700 dark:text-sky-500"></i>
               +94 77 123 4567
-            </div>
+            </div> -->
 
             <div class="flex items-center gap-3">
               <i

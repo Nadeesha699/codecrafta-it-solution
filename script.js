@@ -1,3 +1,56 @@
+const loadingTexts = [
+  "Initializing System...",
+  "Loading Components...",
+  "Connecting Database...",
+  "Launching Interface...",
+  "Almost Ready...",
+];
+
+let index = 0;
+const loadingElement = document.getElementById("loadingText");
+const loader = document.getElementById("loader");
+const navbar = document.getElementById("navbar");
+const mainContent = document.getElementById("mainContent");
+
+// Show first text immediately
+loadingElement.textContent = loadingTexts[0];
+
+// Change loading text
+const textInterval = setInterval(() => {
+  index++;
+
+  if (index < loadingTexts.length) {
+    loadingElement.textContent = loadingTexts[index];
+  } else {
+    clearInterval(textInterval);
+  }
+}, 700);
+
+// Loader timeout (5 seconds)
+setTimeout(() => {
+  clearInterval(textInterval);
+
+  // fade out loader
+  loader.classList.add("fade-out");
+
+  setTimeout(() => {
+    loader.style.display = "none";
+
+    // show main content
+    if (mainContent) {
+      mainContent.classList.remove("hidden");
+    }
+
+    // show navbar
+    if (navbar) {
+      navbar.classList.remove("hidden");
+    }
+
+    // enable scrolling
+    document.body.classList.remove("overflow-hidden");
+  }, 800);
+}, 5000);
+
 // ---- SIDEBAR ----
 function openSidebar() {
   document.getElementById("sidebar").classList.add("open");
@@ -9,6 +62,7 @@ function closeSidebar() {
   document.getElementById("sidebar-overlay").classList.remove("open");
   document.body.style.overflow = "";
 }
+
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeSidebar();
 });
@@ -49,39 +103,47 @@ function toggleTheme() {
   applyTheme(saved);
 })();
 
- document
-    .getElementById("contactForm")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
+emailjs.init("2rxI5irMNBZsGM0HL");
 
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const subject = document.getElementById("subject").value;
-      const message = document.getElementById("message").value;
+const form = document.getElementById("contactForm");
 
-      // Open Gmail compose window
-      const gmailLink =
-        `https://mail.google.com/mail/?view=cm&fs=1&to=ceytrixsoft@gmail.com` +
-        `&su=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(
-          "Name: " +
-            name +
-            "\nEmail: " +
-            email +
-            "\n\nMessage:\n" +
-            message
-        )}`;
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-      window.open(gmailLink, "_blank");
+  Toastify({
+    text: "Sending message...",
+    duration: 2000,
+    gravity: "top",
+    position: "right",
+  }).showToast();
 
-      // Show Toast
-      const toast = document.getElementById("toast");
-      toast.classList.remove("hidden");
+  const templateParams = {
+    from_name: document.getElementById("name").value,
+    from_email: document.getElementById("email").value,
+    subject: document.getElementById("subject").value,
+    message: document.getElementById("message").value,
+  };
 
-      setTimeout(() => {
-        toast.classList.add("hidden");
-      }, 3000);
+  emailjs
+    .send("service_yprrdqk", "template_0xgv8xo", templateParams)
+    .then(function () {
+      Toastify({
+        text: "Message Sent Successfully!",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+      }).showToast();
 
-      // Reset Form
-      document.getElementById("contactForm").reset();
+      form.reset();
+    })
+    .catch(function (error) {
+      Toastify({
+        text: "Failed To Send Message!",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+      }).showToast();
+
+      console.error("EmailJS Error:", error);
     });
+});
